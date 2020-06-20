@@ -9,11 +9,11 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 export class BrandLogoComponent implements OnInit {
 
   data = [
-    '../../../assets/partner/1.png',
-    '../../../assets/partner/2.png',
-    '../../../assets/partner/3.png',
-    '../../../assets/partner/4.png',
-    '../../../assets/partner/5.png',
+    'assets/partner/1.png',
+    'assets/partner/2.png',
+    'assets/partner/3.png',
+    'assets/partner/4.png',
+    'assets/partner/5.png',
   ];
   options = {
     items: 4,

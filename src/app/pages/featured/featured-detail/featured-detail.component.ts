@@ -9,23 +9,23 @@ export class FeaturedDetailComponent implements OnInit {
 
   data = [
     {
-      img: '../../../../assets/single-list-slider/1.jpg',
+      img: 'assets/single-list-slider/1.jpg',
       caption: 'FOR SALE'
     },
     {
-      img: '../../../../assets/single-list-slider/2.jpg',
+      img: 'assets/single-list-slider/2.jpg',
       caption: 'FOR SALE'
     },
     {
-      img: '../../../../assets/single-list-slider/3.jpg',
+      img: 'assets/single-list-slider/3.jpg',
       caption: 'FOR RENT'
     },
     {
-      img: '../../../../assets/single-list-slider/4.jpg',
+      img: 'assets/single-list-slider/4.jpg',
       caption: 'FOR SALE'
     },
     {
-      img: '../../../../assets/single-list-slider/5.jpg',
+      img: 'assets/single-list-slider/5.jpg',
       caption: 'FOR RENT'
     },
   ];
