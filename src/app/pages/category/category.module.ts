@@ -33,7 +33,7 @@ const routes: Routes = [
   ],
   providers: [
     CategoryService,
-    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
+    // { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
   ]
 })
 export class CategoryModule { }

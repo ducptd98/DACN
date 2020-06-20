@@ -31,7 +31,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
   providers: [
     ProductService,
     FacebookCustomService,
-    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
+    // { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
   ]
 })
 export class ProductModule { }

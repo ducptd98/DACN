@@ -38,7 +38,7 @@ const routes: Routes = [
     ProductService,
     CategoryService,
     LocationService,
-    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
+    // { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
   ]
 })
 export class HomeModule { }
