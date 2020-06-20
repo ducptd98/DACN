@@ -14,7 +14,7 @@ export class FeaturedCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.srcImage = '../../../assets/feature/'.concat(this.srcImage);
+    this.srcImage = 'assets/feature/'.concat(this.srcImage);
   }
 
 }
