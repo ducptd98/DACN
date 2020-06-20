@@ -1,0 +1,77 @@
+<app-page-top [isHomePage]="false" imgPageTop="../../../assets/page-top-bg.png"></app-page-top>
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <form [formGroup]="registerForm" class="w-100" (ngSubmit)="register()">
+            <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email</label>
+                        <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1"
+                            [ngClass]="{ 'is-invalid': submitted && f.email.errors }" placeholder="Enter email">
+                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                            <div *ngIf="f.email.errors.required">Email bắt buộc</div>
+                            <div *ngIf="f.email.errors.email">Email sai định dạng/div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Mật khẩu</label>
+                            <input formControlName="password" type="password" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.password.errors }" id="exampleInputPassword1"
+                                placeholder="Password">
+                            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                <div *ngIf="f.password.errors.required">Mật khẩu bắt buộc</div>
+                                <div *ngIf="f.password.errors.minlength">Mật khẩu có ít nhất 8 kí tự</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPass">Xác nhận mật khẩu</label>
+                            <input formControlName="confirmPass" type="password" class="form-control" id="confirmPass"
+                                [ngClass]="{ 'is-invalid': submitted && f.confirmPass.errors }"
+                                placeholder="Confirm Password">
+                            <div *ngIf="submitted && f.confirmPass.errors" class="invalid-feedback">
+                                <div *ngIf="f.confirmPass.errors.required">Xác nhận không được để trống</div>
+                                <div *ngIf="f.confirmPass.errors.mustMatch">Mật khẩu xác nhận không đúng</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneNumber">Điện thoại</label>
+                            <input formControlName="phoneNumber" type="text" class="form-control" id="phoneNumber"
+                                [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }"
+                                placeholder="Enter phone number">
+                            <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
+                                <div *ngIf="f.lastName.errors.pattern">Sai định dạng điện thoại.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="firstName">Tên họ</label>
+                            <input formControlName="firstName" type="text" class="form-control" id="firstName"
+                                [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"
+                                placeholder="Enter first name" required>
+                            <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                                <div *ngIf="f.firstName.errors.required">Tên họ bắt buộc</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Tên</label>
+                            <input formControlName="lastName" type="text" class="form-control" id="lastName"
+                                [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
+                                placeholder="Enter last name">
+                            <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                                <div *ngIf="f.lastName.errors.required">Tên bắt buộc</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Địa chỉ</label>
+                            <input formControlName="address" type="text" class="form-control" id="address"
+                                placeholder="Enter address">
+                        </div>
+                    </div>
+                </div>
+                <p class="pt-2">Already our customer? <a [routerLink]="['/register']">Đăng nhập</a></p>
+                <button type="submit" class="btn btn-primary">Đăng kí</button>
+            </div>
+        </form>
+    </div>
+</div>

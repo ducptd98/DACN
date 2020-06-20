@@ -1,0 +1,10 @@
+<ol class="breadcrumb pt-4 pb-4">
+    <li>
+        <i class="fa fa-home mr-1 pointer" [routerLink]="['/home']"></i>
+    </li>
+    <li *ngFor="let breadcrumb of breadcrumbs, let i = index">
+        <span [routerLink]="breadcrumb.url" [ngClass]="{'disabled': i === breadcrumbs.length-1}">
+            {{ breadcrumb.label }}
+        </span>
+    </li>
+</ol>

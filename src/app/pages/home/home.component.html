@@ -1,0 +1,245 @@
+<div class="" *ngIf="products.length > 0 && category.length > 0">
+    <app-page-top [descriptions]="bindDescriptionsToPagetop" [isHomePage]="true"
+        header="TÌM NƠI CỦA BẠN VỚI PHONG CÁCH SỐNG ĐỊA PHƯƠNG CỦA CHÚNG TÔI" imgPageTop="../../../assets/bg.jpg"
+        (viewDetail)="click()">
+    </app-page-top>
+    <app-filter-section (selectedAddress)="onAddress($event)" (selectedDistrict)="onDistrict($event)"></app-filter-section>
+    <section class="pt-5 mt-5">
+        <div class="container">
+            <div class="section-title text-center">
+                <h3>DANH SÁCH TIN GẦN ĐÂY</h3>
+                <p>Khám phá bao nhiêu tài sản mới nhất đã được bán với giá</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <app-property-card [data]="products[0]"></app-property-card>
+                </div>
+                <div class="col-md-6">
+                    <app-property-card [data]="products[1]"></app-property-card>
+                </div>
+                <div class="col-md-6">
+                    <app-property-card [data]="products[2]"></app-property-card>
+                </div>
+                <div class="col-md-6">
+                    <app-property-card [data]="products[3]"></app-property-card>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="services-section spad set-bg" style="background-image: url('../../../assets/service-bg.jpg');">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <img src="../../../assets/service.jpg" alt="" style="width: 100%; height: 100%;">
+                </div>
+                <div class="col-lg-5 offset-lg-1 pl-lg-0">
+                    <div class="section-title text-white">
+                        <h3 class="text-white">DỊCH VỤ CỦA CHÚNG TÔI</h3>
+                        <p>Chúng tôi cung cấp dịch vụ hoàn hảo cho khách hàng</p>
+                    </div>
+                    <div class="services">
+                        <div class="service-item">
+                            <i class="fa fa-comments"></i>
+                            <div class="service-text">
+                                <h5>Dịch vụ tư vấn</h5>
+                                <p>In Aenean purus, pretium sito amet sapien denim consectet sed urna placerat sodales
+                                    magna
+                                    leo.</p>
+                            </div>
+                        </div>
+                        <div class="service-item">
+                            <i class="fa fa-home"></i>
+                            <div class="service-text">
+                                <h5>Quản lý tài sản</h5>
+                                <p>In Aenean purus, pretium sito amet sapien denim consectet sed urna placerat sodales
+                                    magna
+                                    leo.</p>
+                            </div>
+                        </div>
+                        <div class="service-item">
+                            <i class="fa fa-briefcase"></i>
+                            <div class="service-text">
+                                <h5>Cho thuê và bán</h5>
+                                <p>In Aenean purus, pretium sito amet sapien denim consectet sed urna placerat sodales
+                                    magna
+                                    leo.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container mt-5">
+            <div class="section-title text-center">
+                <h3>Danh sách tiêu biểu</h3>
+                <p>Nhà và căn hộ để bán và cho thuê trong khu vực của bạn</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <app-property-card [data]="products[0]"></app-property-card>
+                </div>
+                <div class="col-md-6">
+                    <app-property-card [data]="products[1]"></app-property-card>
+                </div>
+                <div class="col-md-6">
+                    <app-property-card [data]="products[2]"></app-property-card>
+                </div>
+                <div class="col-md-6">
+                    <app-property-card [data]="products[3]"></app-property-card>
+                </div>
+                <div class="col-md-6">
+                    <app-property-card [data]="products[4]"></app-property-card>
+                </div>
+                <div class="col-md-6">
+                    <app-property-card [data]="products[5]"></app-property-card>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="feature-category-section spad">
+        <div class="container">
+            <div class="section-title text-center">
+                <h3>TÀI NGHUYÊN CẦN TÌM</h3>
+                <p>Bạn đang tìm loại tài sản nào? Chúng tôi sẽ giúp bạn</p>
+            </div>
+            <div class="row text-center">
+                <div class="col-lg-3 col-md-6 f-cata">
+                    <a [routerLink]="['/product/'+category[0].title,{cateId: category[0].url_encode}]"><img
+                            src="../../../assets/feature-cate/1.jpg" alt="" class="fit-img"></a>
+                    <h5>Chung cư</h5>
+                </div>
+                <div class="col-lg-3 col-md-6 f-cata">
+                    <a [routerLink]="['/product/'+category[1].title,{cateId: category[1].url_encode}]"><img
+                            src="../../../assets/feature-cate/2.jpg" alt="" class="fit-img"></a>
+                    <h5>Nhà riêng</h5>
+                </div>
+                <div class="col-lg-3 col-md-6 f-cata">
+                    <a [routerLink]="['/product/'+category[2].title,{cateId: category[2].url_encode}]"><img
+                            src="../../../assets/feature-cate/3.jpg" alt="" class="fit-img"></a>
+                    <h5>Biệt thự</h5>
+                </div>
+                <div class="col-lg-3 col-md-6 f-cata">
+                    <a [routerLink]="['/product/'+category[3].title,{cateId: category[3].url_encode}]"><img
+                            src="../../../assets/feature-cate/4.jpg" alt="" class="fit-img"></a>
+                    <h5>Nhà mặt phố</h5>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="gallery-section spad">
+        <div class="container">
+            <div class="section-title text-center">
+                <h3>Địa chỉ phổ biến</h3>
+                <p>Chúng tôi hiểu giá trị của những địa điểm</p>
+            </div>
+            <div class="gallery">
+                <div class="grid-sizer"></div>
+                <div class="row">
+                    <a href="#" class="gallery-item set-bg col-sm-12 col-md-6 col-lg-6">
+                        <img src="../../../assets/gallery/1.jpg" alt="" style="width: 100%; height: 100%;">
+                        <div class="gi-info">
+                            <h3>TP. Hồ Chí Minh</h3>
+                            <p>118 Tin rao</p>
+                        </div>
+                    </a>
+                    <a href="#" class="gallery-item set-bg col-sm-12 col-md-6 col-lg-6">
+                        <img src="../../../assets/gallery/2.jpg" alt="" style="width: 100%; height: 100%;">
+                        <div class="gi-info">
+                            <h3>Vũng Tàu</h3>
+                            <p>112 Tin rao</p>
+                        </div>
+                    </a>
+
+                    <a href="#" class="gallery-item set-bg col-sm-12 col-md-6 col-lg-6">
+                        <img src="../../../assets/gallery/3.jpg" alt="" style="width: 100%; height: 100%;">
+                        <div class="gi-info">
+                            <h3>Đồng Nai</h3>
+                            <p>72 TIn rao</p>
+                        </div>
+                    </a>
+                    <a href="#" class="gallery-item set-bg col-sm-12 col-md-6 col-lg-6">
+                        <img src="../../../assets/gallery/4.jpg" alt="" style="width: 100%; height: 100%;">
+                        <div class="gi-info">
+                            <h3>Bình Dương</h3>
+                            <p>50 Tin rao</p>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="review-section set-bg" style="background-image: url('../../../assets/review-bg.jpg');">
+        <div class="container">
+            <owl-carousel [options]="mySlideOptions" [carouselClasses]="['review-slider']">
+                <div class="review-item text-white" *ngFor="let item of data">
+                    <div class="rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                    </div>
+                    <p>{{item.descriptions}}</p>
+                    <h5 class="text-white">{{item.name}}</h5>
+                    <span>{{item.title}}</span>
+                    <div class="clint-pic set-bg" style="background-image: url('../../../assets/review/1.jpg');"
+                        [ngStyle]="{'background-image': 'url(../../../../../assets/' + item.img + ')'}"></div>
+                </div>
+            </owl-carousel>
+            <!-- <div class="review-slider owl-carousel">
+            <div class="review-item text-white">
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+                <p>“Leramiz was quick to understand my needs and steer me in the right direction. Their professionalism
+                    and warmth made the process of finding a suitable home a lot less stressful than it could have been.
+                    Thanks, agent Tony Holland.”</p>
+                <h5>Stacy Mc Neeley</h5>
+                <span>CEP’s Director</span>
+                <div class="clint-pic set-bg" style="background-image: url('../../../assets/review/1.jpg');"></div>
+            </div>
+            <div class="review-item text-white">
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+                <p>“Leramiz was quick to understand my needs and steer me in the right direction. Their professionalism
+                    and warmth made the process of finding a suitable home a lot less stressful than it could have been.
+                    Thanks, agent Tony Holland.”</p>
+                <h5>Stacy Mc Neeley</h5>
+                <span>CEP’s Director</span>
+                <div class="clint-pic set-bg" style="background-image: url('../../../assets/review/1.jpg');"></div>
+            </div>
+            <div class="review-item text-white">
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+                <p>“Leramiz was quick to understand my needs and steer me in the right direction. Their professionalism
+                    and warmth made the process of finding a suitable home a lot less stressful than it could have been.
+                    Thanks, agent Tony Holland.”</p>
+                <h5>Stacy Mc Neeley</h5>
+                <span>CEP’s Director</span>
+                <div class="clint-pic set-bg" style="background-image: url('../../../assets/review/1.jpg');"></div>
+            </div>
+        </div> -->
+        </div>
+    </section>
+</div>

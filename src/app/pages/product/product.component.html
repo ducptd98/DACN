@@ -1,0 +1,79 @@
+<app-page-top [isHomePage]="false" imgPageTop="../../../assets/page-top-bg.png"></app-page-top>
+<div class="container">
+    <app-loading *ngIf="loading"></app-loading>
+    <div *ngIf="!loading">
+        <app-breadcrumb></app-breadcrumb>
+
+        <div *ngIf="products.length == 0" class="row justify-content-center">
+            <form class="form-inline my-2 justify-content-center mb-2 col-12" [formGroup]="searchForm"
+                (ngSubmit)="search(searchForm)">
+                <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm ..." aria-label="Search"
+                    style="width: 30%;" formControlName="searchTerm">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm kiếm</button>
+            </form>
+            <h2 class="col-12 text-center mt-5 mb-5">Không có bất kì tin nào</h2>
+        </div>
+        <div *ngIf="products.length > 0" class="">
+            <form class="form-inline my-2 justify-content-center mb-2" [formGroup]="searchForm"
+                (ngSubmit)="search(searchForm)">
+                <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm ..." aria-label="Search"
+                    style="width: 30%;" formControlName="searchTerm">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm kiếm</button>
+            </form>
+            <ul class="list-group mb-2">
+                <li class="list-group-item d-flex align-items-center" *ngFor="let item of products">
+                    <div class="row">
+                        <a [routerLink]="['/product/'+category+'/detail/'+item.id]"
+                            class="col-md-12 col-sm-12 product-name">{{item.name}}</a>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="image-parent">
+                                <a [routerLink]="['/product/'+category+'/detail/'+item.id]">
+                                    <img [src]="item.images[0]|| ''" class="img-fluid" alt="quixote"
+                                        style="width: 100%;height: 100%;">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-10 col-sm-12">
+                            <div class="ml-4" style="max-height: 111px; overflow: hidden;">
+                                <p>{{item.desc[0].slice(0,310).concat(' ...')}}</p>
+                                <p style="">
+                                    Diện tích: <span class="value">{{item.area}}</span>
+                                    Giá: <span class="value">{{item.price | parseCurrency }}</span>
+                                    Tại: <span
+                                        class="value">{{item.address.split('-')[1]}}-{{item.address.split('-')[2]}}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <!-- <ul *ngIf="isSearch" class="list-group mb-2">
+                <li class="list-group-item d-flex align-items-center" *ngFor="let item of filterProducts">
+                    <div class="row">
+                        <a [routerLink]="['/product/'+category+'/detail/'+item.id]"
+                            class="col-md-12 col-sm-12 product-name">{{item.name}}</a>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="image-parent">
+                                <a [routerLink]="['/product/'+category+'/detail/'+item.id]">
+                                    <img [src]="item.images[0]|| ''" class="img-fluid" alt="quixote"
+                                        style="width: 100%;height: 100%;">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-10 col-sm-12">
+                            <div class="ml-4" style="max-height: 111px; overflow: hidden;">
+                                <p>{{item.desc[0].slice(0,310).concat(' ...')}}</p>
+                                <p style="">
+                                    Diện tích: <span class="value">{{item.area}}</span>
+                                    Giá: <span class="value">{{item.price | parseCurrency }}</span>
+                                    Tại: <span class="value">{{item.address.split('-')[1]}}-{{item.address.split('-')[2]}}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul> -->
+            <app-pagination [length]="total" (changePage)="changeCurPage($event)" [curPage]="curPage"></app-pagination>
+        </div>
+    </div>
+</div>

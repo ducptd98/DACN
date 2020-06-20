@@ -1,0 +1,19 @@
+<div class="propertie-item set-bg" [ngStyle]="{'background-image': 'url(' + data?.images[0] + ')'}">
+    <div class="sale-notic">FOR SALE</div>
+    <div class="propertie-info text-white">
+        <div class="row">
+            <div class="col-sm-12 col-md-8 col-lg-8">
+                <h5 class="text-white"><a
+                        class="name"
+                        [routerLink]="['/product/'+data?.category2+'/detail/'+data.id]">{{data?.name}}</a>
+                </h5>
+                <p><i class="fa fa-map-marker"></i> {{data.address.split('-')[1]}}-{{data.address.split('-')[2]}}</p>
+            </div>
+            <div class="col-sm-12 col-md-4 col-lg-4 my-auto">
+                <div class="price">
+                    {{data?.price | parseCurrency}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

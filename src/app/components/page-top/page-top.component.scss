@@ -1,0 +1,37 @@
+.set-bg {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top center;
+  max-height: 700px;
+  width: 100%;
+  position: relative;
+}
+.header-text {
+  position: absolute;
+  // left: 40%;
+  top: 55%;
+  z-index: 9;
+  color: #fff;
+  width: 100%;
+  text-align: center;
+}
+h2 {
+  padding-top: 20px;
+  font-size: 2rem;
+}
+.site-btn {
+  position: relative;
+  display: inline-block;
+  padding: 15px 30px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 2px;
+  border-radius: 3px;
+  min-width: 170px;
+  text-align: center;
+  background: #30caa0;
+  cursor: pointer;
+  border: none;
+  color: #fff;
+}

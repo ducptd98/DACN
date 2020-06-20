@@ -1,0 +1,20 @@
+.loading-container {
+    position: relative;
+    height: 70px;
+    ngx-loading-bar {
+        display: block;
+        #loading-bar-spinner {
+            position: absolute;
+            top: 5px;
+            left: 50%;
+        }
+        #loading-bar {
+            .bar {
+                position: absolute;
+                .peg {
+                    display: none;
+                }
+            }
+        }
+    }
+}

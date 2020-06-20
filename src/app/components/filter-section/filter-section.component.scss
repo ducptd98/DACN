@@ -1,0 +1,29 @@
+.filter-section {
+    position: absolute;
+    width: 100%;
+    transform: translateY(-50%);
+  .filter-search {
+    background-color: #30caa0;
+    border-radius: 3px;
+    .site-btn {
+        position: relative;
+        display: inline-block;
+        padding: .67rem .75rem;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 16px;
+        letter-spacing: 2px;
+        border-radius: 3px;
+        // min-width: 170px;
+        text-align: center;
+        background: #000;
+        cursor: pointer;
+        border: none;
+        color: #fff;
+        
+    }
+    .site-btn:hover{
+        opacity: 0.8;
+    }
+  }
+}

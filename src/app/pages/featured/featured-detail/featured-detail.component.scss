@@ -1,0 +1,138 @@
+.sale-notic,
+.rent-notic {
+  color: #fff;
+  font-size: 12px;
+  text-transform: uppercase;
+  background: #e94646;
+  padding: 7px 13px;
+  display: inline-block;
+  border-radius: 2px;
+  position: relative;
+  z-index: 3;
+  margin: 20px;
+}
+.set-bg {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top center;
+}
+.sl-item {
+  height: 400px;
+  // width: 60%;
+}
+.w-60 {
+  width: 60% !important;
+}
+.w-40 {
+  width: 40% !important;
+}
+.btn-send {
+  background: #30caa0;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  height: 30px;
+  border-radius: 1px;
+  cursor: pointer;
+}
+i {
+  color: #30caa0;
+}
+.detail-content {
+  padding: 70px 30px;
+  border: 1px solid #e1e1e1;
+  border-top: none;
+  .sl-item {
+    h2 {
+      font-size: 30px;
+      font-weight: 400;
+      margin-bottom: 5px;
+    }
+  }
+  .price-btn {
+    display: inline-block;
+    font-size: 22px;
+    font-weight: 600;
+    text-align: center;
+    padding: 9px;
+    background: #30caa0;
+    color: #fff;
+    border-radius: 3px;
+  }
+  .sl-sp-title {
+    display: block;
+    font-size: 28px;
+    font-weight: 400;
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #ebebeb;
+  }
+  .bd-no {
+    border-bottom: none;
+  }
+  .plan-accordion {
+    overflow: hidden;
+    border-bottom: 1px solid #e1e1e1;
+    margin-bottom: 75px;
+    .panel-link {
+      display: block;
+      background: #f7f7f7;
+      color: #707070;
+      font-size: 16px;
+      border: none;
+      width: 100%;
+      cursor: pointer;
+      padding: 18px 30px;
+      border: 1px solid #e1e1e1;
+      border-bottom: 0;
+      position: relative;
+      text-align: left;
+      span {
+        margin-left: 20px;
+      }
+    }
+    i {
+      position: absolute;
+      font-size: 24px;
+      top: 50%;
+      right: 17px;
+      margin-top: -11px;
+      -webkit-transition: all 0.4s;
+      -o-transition: all 0.4s;
+      transition: all 0.4s;
+    }
+    .active {
+      background: #30caa0;
+      color: #fff;
+      border: 1px solid #30caa0;
+      i {
+        -webkit-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        transform: rotate(180deg);
+        color: #fff;
+      }
+    }
+    .collapsed {
+      background: #f7f7f7;
+      color: #707070;
+      border: 1px solid #e1e1e1;
+      border-bottom: 0;
+      i {
+        color: #30caa0;
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+    }
+  }
+  .perview-video {
+    position: relative;
+    margin-bottom: 75px;
+    .video-link {
+      position: absolute;
+      left: calc(50% - 30px);
+      top: calc(50% - 30px);
+    }
+  }
+}

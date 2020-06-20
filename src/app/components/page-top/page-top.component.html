@@ -1,0 +1,11 @@
+<div class="page-top-section">
+    <div class="position-relative">
+        <img src="{{imgPageTop}}" alt="Page Top" class="set-bg" [ngStyle]="{height: isHomePage? '850px' : '300px'}">
+        <!-- [ngStyle]="{'background-image': 'url('+imgPageTop+')'}" -->
+        <div class="header-text">
+            <h2 class="text-white">{{header}}</h2>
+            <h5 class="text-white">{{descriptions}}</h5>
+            <a *ngIf="isHomePage" class="site-btn mt-4" (click)="onClick()">VIEW DETAIL</a>
+        </div>
+    </div>
+</div>

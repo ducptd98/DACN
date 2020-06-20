@@ -1,0 +1,51 @@
+<app-brand-logo></app-brand-logo>
+<footer class="footer-section set-bg" style="background-image: url(../../../../../assets/footer-bg.jpg);">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 footer-widget">
+                <img src="" alt="">
+                <p>Lorem ipsum dolo sit azmet, consecter dipise consult elit. Maecenas mamus antesme non anean a dolor
+                    sample tempor nuncest erat.</p>
+                <div class="social">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-skype"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 footer-widget">
+                <div class="contact-widget">
+                    <h5 class="fw-title">LIÊN HỆ</h5>
+                    <p><i class="fa fa-map-marker"></i>Quang Trung, Gò vấp, Hồ Chí Minh </p>
+                    <p><i class="fa fa-phone"></i>(+84) 98 975 1783</p>
+                    <p><i class="fa fa-envelope"></i>ducptd98@gmail.com</p>
+                    <!-- <p><i class="fa fa-clock-o"></i>Mon - Sat, 08 AM - 06 PM</p> -->
+                    <p><i class="fa fa-clock-o"></i>{{currentTime}}</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 footer-widget">
+                <div class="double-menu-widget">
+                    <h5 class="fw-title">ĐỊA ĐIỂM PHỔ BIẾN</h5>
+                    <ul>
+                        <li><a [routerLink]="['/product/search',{name: 'Hồ Chí Minh'}]" >TP. Hồ Chí Minh</a></li>
+                        <li><a [routerLink]="['/product/search',{name: 'Hà Nội'}]">Hà Nội</a></li>
+                        <li><a [routerLink]="['/product/search',{name: 'Vũng Tàu'}]">Vũng Tàu</a></li>
+                        <li><a [routerLink]="['/product/search',{name: 'Đồng Nai'}]">Đồng Nai</a></li>
+                        <li><a [routerLink]="['/product/search',{name: 'Bình Dương'}]">Bình Dương</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6  footer-widget">
+                <div class="newslatter-widget">
+                    <h5 class="fw-title">TIN TỨC</h5>
+                    <p>Theo dỗi tin tức mới nhất tại đây</p>
+                    <form [formGroup]="" class="footer-newslatter-form">
+                        <input type="text" placeholder="Email address">
+                        <button><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

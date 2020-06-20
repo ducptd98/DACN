@@ -1,0 +1,10 @@
+<div class="clients-section">
+    <div class="container">
+        <owl-carousel [options]="options"
+            [carouselClasses]="['clients-slider']">
+            <a *ngFor="let item of data">
+                <img src={{item}} alt="" style="width: 50%;">
+            </a>
+        </owl-carousel>
+    </div>
+</div>  

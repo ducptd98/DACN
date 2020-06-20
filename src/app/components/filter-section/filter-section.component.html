@@ -1,0 +1,30 @@
+<div class="filter-section">
+    <div class="container filter-search p-3">
+        <div class="row pt-2">
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <input class="form-control" type="text" placeholder="Nhập địa chỉ bạn cần tìm" [(ngModel)]="address">
+            </div>
+            <div class="col-sm-12 col-md-8 col-lg-8">
+                <div class="row">
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <select class="form-control" [(ngModel)]="province" (change)="provinceChange($event)" title="Thành phố">
+                            <option [ngValue]="null" selected>Thành phố</option>
+                            <option  *ngFor="let item of provinces" [ngValue]="item">
+                                {{item.Title}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class=" col-sm-12 col-md-5 col-lg-5">
+                        <select class="form-control" [(ngModel)]="district" (change)="districtChange($event)">
+                            <option [ngValue]="null" selected>Quận</option>
+                            <option *ngFor="let d of districts" [ngValue]="d">{{d.Title}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <button class="site-btn fs-submit form-control" (click)="find()">TÌM KIẾM</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

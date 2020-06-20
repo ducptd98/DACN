@@ -1,0 +1,85 @@
+<header class="header-front">
+    <div class="container">
+        <div class="header-top pb-2 border-bottom mb-3">
+            <div class="d-flex justify-content-between">
+                <div class="row w-50">
+                    <div class="col-sm-6 col-md-7 col-lg-7 top-info">
+                        <i class="fas fa-phone-alt"></i>(+88) 666 121 4321
+                    </div>
+                    <div class="col-sm-6 col-md-5 col-lg-5 top-info">
+                        <i class="far fa-envelope"></i> ducptd98@gmail.com
+                    </div>
+                </div>
+                <div class="row w-35">
+                    <div class="col-sm-6 col-md-7 col-lg-7 top-info">
+                        <i class="fab fa-facebook"></i> |
+                        <i class="fab fa-skype"></i> |
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="col-sm-6 col-md-5 col-lg-5">
+                        <div class="row">
+                            <div class="pr-2 top-info" style="cursor: pointer;" [routerLink]="['/register']"><i
+                                    class="far fa-user-circle pr-1"></i>Register</div>
+                            <div class="top-info" [routerLink]="['/login']" style="cursor: pointer;"><i
+                                    class="fas fa-sign-in-alt pr-1"></i>Login
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent sticky-top">
+            <!-- <a class="navbar-brand text" style="font-size: 1.7rem;" [routerLink]="['/home']">CD</a> -->
+            <a href="#" class="site-logo"><img src="../../../assets/image.png" alt="" style="width: 120px; height: 120px;"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item top-info" routerLinkActive="active">
+                        <a class="nav-link text" href="#" [routerLink]="['/home']">Trang chủ <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown" routerLinkActive="active">
+                        <a class="nav-link dropdown-toggle text" href="#" id="navbarDropdownProduct" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            [routerLink]="['/featured']">
+                            Nhà đát tiêu biểu
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownProduct">
+                            <a class="dropdown-item" [routerLink]="['/featured/detail']">Product Detail</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown" routerLinkActive="active">
+                        <a class="nav-link dropdown-toggle text" href="#" id="navbarDropdownCategory" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            [routerLink]="['/category']">
+                            Nhà đất bán
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownCategory">
+                            <a *ngFor="let itemLv1 of lv1" class="dropdown-item" routerLinkActive="active"
+                                [routerLink]="['/product/'+itemLv1.title,{cateId: itemLv1.url_encode}]">{{itemLv1.category2}}</a>
+                        </div>
+                    </li>
+                    <!-- <li class="nav-item dropdown" routerLinkActive="active">
+                        <a class="nav-link dropdown-toggle text" href="#" id="navbarDropdownCollection" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [routerLink]="['/category']">
+                            Nhà đất thuê
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownCollection">
+                            <a *ngFor="let itemLv2 of lv2" class="dropdown-item"
+                            [routerLink]="['/category/'+itemLv2.id]">{{itemLv2.category2}}</a>
+                        </div>
+                    </li> -->
+                    <li class="nav-item" routerLinkActive="active">
+                        <a class="nav-link text" href="#" [routerLink]="['/home']">
+                            Liên hệ
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
