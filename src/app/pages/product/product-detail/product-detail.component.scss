@@ -139,3 +139,11 @@ i {
 p {
     font-size: 1.2rem;
 }
+@media (min-width: 1238) {
+    #main {
+        width: 100% !important;
+    }
+    #sub {
+        display: none;
+    }
+}

@@ -1,7 +1,9 @@
+import { FacebookCustomService } from './../../../../api/services/facebook-custom.service';
 import { ProductService } from './../../../../api/services/product.service';
-import { Subscription } from 'rxjs';
+import { Subscription, fromEvent, Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-detail',
@@ -53,13 +55,26 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   product: any;
   productRelated = [];
   loading = true;
+  currentUrl = '';
+  isScreenSmall$: Observable<any>;
 
-  constructor(private route: ActivatedRoute, private productSer: ProductService) { }
+  constructor(private route: ActivatedRoute, private productSer: ProductService, private fbCusService: FacebookCustomService) {
+    this.currentUrl = window.location.href;
+  }
   ngOnDestroy(): void {
     this.subscription.forEach(item => item.unsubscribe());
   }
 
   ngOnInit() {
+    // Checks if screen size is less than 1024 pixels
+    const checkScreenSize = () => document.body.offsetWidth > 1238;
+
+    // Create observable from window resize event throttled so only fires every 500ms
+    const screenSizeChanged$ = fromEvent(window, 'resize').pipe(map(checkScreenSize));
+
+    // Start off with the initial value use the isScreenSmall$ | async in the
+    // view to get both the original value and the new value after resize.
+    this.isScreenSmall$ = screenSizeChanged$.pipe(startWith(checkScreenSize()));
     const routeSub = this.route.params.subscribe(routerParam => {
       const productId = routerParam.productId;
       const category = routerParam.category;
