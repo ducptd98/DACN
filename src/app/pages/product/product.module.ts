@@ -7,7 +7,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { OwlModule } from 'ngx-owl-carousel';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FacebookModule } from 'ngx-facebook';
+import { FacebookModule, FacebookService } from 'ngx-facebook';
 
 import { ProductRoutingModule } from './product-routing.module';
 import { ProductComponent } from './product.component';
@@ -31,6 +31,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
   providers: [
     ProductService,
     FacebookCustomService,
+    FacebookService
     // { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
   ]
 })

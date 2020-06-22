@@ -1,4 +1,4 @@
-import { FacebookCustomService } from './../../../../api/services/facebook-custom.service';
+import { FacebookService, InitParams, UIResponse, UIParams } from 'ngx-facebook';
 import { ProductService } from './../../../../api/services/product.service';
 import { Subscription, fromEvent, Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -58,8 +58,13 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   currentUrl = '';
   isScreenSmall$: Observable<any>;
 
-  constructor(private route: ActivatedRoute, private productSer: ProductService, private fbCusService: FacebookCustomService) {
+  constructor(private route: ActivatedRoute, private productSer: ProductService, private fbService: FacebookService) {
     this.currentUrl = window.location.href;
+    this.fbService.init({
+      appId: '1098638313668438',
+      xfbml: true,
+      version: 'v7.0'
+    });
   }
   ngOnDestroy(): void {
     this.subscription.forEach(item => item.unsubscribe());
@@ -81,6 +86,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       this.getProduct(productId);
     });
     this.subscription.push(routeSub);
+  }
+  private handleError(error) {
+    console.error('Error processing action', error);
   }
 
   getProduct(productId) {
@@ -123,4 +131,16 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
+  share() {
+    const options: UIParams = {
+      method: 'share',
+      href: this.currentUrl
+    };
+    this.fbService.ui(options)
+      .then((res: UIResponse) => {
+        console.log('Got the users profile', res);
+      })
+      .catch(this.handleError);
+  }
+
 }

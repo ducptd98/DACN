@@ -11,9 +11,11 @@ export class FacebookCustomService {
     xfbml: true,
     version: 'v7'
   };
-  constructor(private fb: FacebookService) {
+  fb = new FacebookService();
 
-    fb.init(this.initParams);
+  constructor() {
+
+    this.fb.init(this.initParams);
 
   }
   share(url: string) {
