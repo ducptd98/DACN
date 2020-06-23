@@ -46,6 +46,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   products = [];
   Allproducts = [];
   category = [];
+  categoriesFilter = [];
   address;
   district;
   subscription: Subscription[] = [];
@@ -62,7 +63,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('HomeComponent -> ngOnInit -> ngOnInit');
     this.getProductByCategory(this.cateId, this.limit, this.offset);
     this.getCategory();
     this.toastrService.overlayContainer = this.toastContainer;
@@ -85,7 +85,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     const cateSubscription = this.cateService.getAllNotPaging().subscribe(
       data => {
         this.category = data;
-        console.log('HomeComponent -> getCategory -> this.category', this.category);
+        data.forEach(item => {
+          if (item.parent_category !== null) {
+            if (item.category1 === 'Nhà đất bán') {
+              const title = item.url_site.split('/')[3];
+              const newObj = Object.assign(item, { title });
+              this.categoriesFilter.push(newObj);
+            }
+          }
+        });
       },
       err => console.error('@@@ getAllNotPaging err ', err),
     );

@@ -1,10 +1,8 @@
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LocationService } from './../../../api/services/location.service';
-import { ToastrService } from 'ngx-toastr';
-import { AlertProvider } from './../../utilities/alert.provider';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Component, OnInit, Input, Output, EventEmitter, enableProdMode, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-filter-section',
@@ -16,11 +14,13 @@ export class FilterSectionComponent implements OnInit, OnDestroy {
 
   @Input() provinces = [];
   @Input() districts: [];
+  @Input() categories: [];
 
   locationForm: FormGroup;
   province = null;
   district = null;
   address = null;
+  category = null;
   subscription: Subscription[] = [];
 
   @Output() selectedAddress = new EventEmitter<any>();
@@ -45,8 +45,9 @@ export class FilterSectionComponent implements OnInit, OnDestroy {
   find() {
     this.selectedAddress.emit(this.address);
     this.selectedDistrict.emit(this.district);
-    const name = `${this.district.Title}`;
-    this.router.navigate([`/product/search`, { name }]);
+    const name = this.district ? `${this.district.Title}` : '';
+    const categoryTitle = this.category ? this.category.title : 'nha-dat-ban';
+    this.router.navigate([`/product/search`, { name, category: categoryTitle }]);
   }
 
   provinceChange(e) {
@@ -55,6 +56,9 @@ export class FilterSectionComponent implements OnInit, OnDestroy {
   }
   districtChange(e) {
     console.log('district', this.district);
+  }
+  categoryChange(e) {
+    console.log('category', this.category);
   }
   getProvince() {
     const locateSubscription = this.locateService.getProvinceCity().subscribe(data => {

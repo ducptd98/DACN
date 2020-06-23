@@ -47,6 +47,7 @@ export class ProductComponent implements OnInit, OnDestroy {
       if (!routerParam.cateId) {
         this.filter = routerParam.name;
         this.searchProductByName(this.filter, 1);
+        this.category = routerParam.category;
       } else {
         this.category = routerParam.category;
         this.getProductByCategory(routerParam.cateId, 25, 0);

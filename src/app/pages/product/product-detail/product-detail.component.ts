@@ -134,7 +134,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   share() {
     const options: UIParams = {
       method: 'share',
-      href: this.currentUrl
+      href: this.currentUrl,
+      picture: this.product.images[0]
     };
     this.fbService.ui(options)
       .then((res: UIResponse) => {
