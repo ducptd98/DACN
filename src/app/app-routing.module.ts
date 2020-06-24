@@ -35,6 +35,11 @@ const routes: Routes = [
         data: { breadcrumb: 'Danh sách tin tức' }
       },
       {
+        path: 'post',
+        loadChildren: () => import('./pages/post/post.module').then(m => m.PostModule),
+        data: { breadcrumb: 'Danh sách bài đăng' }
+      },
+      {
         path: 'login',
         component: LoginComponent,
         data: { breadcrumb: 'Đăng nhập' }

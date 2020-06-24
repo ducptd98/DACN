@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { FacebookService, InitParams, UIParams, UIResponse } from 'ngx-facebook';
 
 @Injectable({
@@ -11,9 +11,8 @@ export class FacebookCustomService {
     xfbml: true,
     version: 'v7'
   };
-  fb = new FacebookService();
 
-  constructor() {
+  constructor(@Inject('fb') private fb: FacebookService) {
 
     this.fb.init(this.initParams);
 

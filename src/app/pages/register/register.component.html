@@ -43,30 +43,29 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="firstName">Tên họ</label>
-                            <input formControlName="firstName" type="text" class="form-control" id="firstName"
-                                [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"
-                                placeholder="Enter first name" required>
-                            <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-                                <div *ngIf="f.firstName.errors.required">Tên họ bắt buộc</div>
-                            </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-12">
+                    <div class="form-group">
+                        <label for="firstName">Tên họ</label>
+                        <input formControlName="firstName" type="text" class="form-control" id="firstName"
+                            [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" placeholder="Enter first name"
+                            required>
+                        <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                            <div *ngIf="f.firstName.errors.required">Tên họ bắt buộc</div>
                         </div>
-                        <div class="form-group">
-                            <label for="lastName">Tên</label>
-                            <input formControlName="lastName" type="text" class="form-control" id="lastName"
-                                [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
-                                placeholder="Enter last name">
-                            <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
-                                <div *ngIf="f.lastName.errors.required">Tên bắt buộc</div>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Tên</label>
+                        <input formControlName="lastName" type="text" class="form-control" id="lastName"
+                            [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" placeholder="Enter last name">
+                        <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                            <div *ngIf="f.lastName.errors.required">Tên bắt buộc</div>
                         </div>
-                        <div class="form-group">
-                            <label for="address">Địa chỉ</label>
-                            <input formControlName="address" type="text" class="form-control" id="address"
-                                placeholder="Enter address">
-                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Địa chỉ</label>
+                        <input formControlName="address" type="text" class="form-control" id="address"
+                            placeholder="Enter address">
                     </div>
                 </div>
                 <p class="pt-2">Already our customer? <a [routerLink]="['/register']">Đăng nhập</a></p>

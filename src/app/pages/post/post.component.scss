@@ -1,0 +1,28 @@
+.tag-list {
+    display: inline-block;
+    margin-right: 5px;
+    padding-left: 0 !important;
+    a {
+        text-decoration: none;
+    }
+    .tag-default {
+        color: #fff !important;
+        font-size: 0.8rem;
+        padding-top: 0.1rem;
+        padding-bottom: 0.1rem;
+        white-space: nowrap;
+        margin-right: 3px;
+        margin-bottom: 0.2rem;
+        display: inline-block;
+        background-color: #818a91;
+    }
+    .tag-pill {
+        cursor: pointer;
+        padding-right: 0.6em;
+        padding-left: 0.6em;
+        border-radius: 10rem;
+        &:hover {
+            background-color: red;
+        }
+    }
+}
