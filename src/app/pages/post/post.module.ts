@@ -1,3 +1,4 @@
+import { CommentComponent } from './../../components/comment/comment.component';
 import { ArticleComponent } from './../../components/article/article.component';
 import { SharedModule } from './../../shared/shared.module';
 import { PostDetailComponent } from './post-detail/post-detail.component';
@@ -13,7 +14,8 @@ import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
   declarations: [
     PostComponent,
     PostDetailComponent,
-    ArticleComponent
+    ArticleComponent,
+    CommentComponent
   ],
   imports: [
     CommonModule,

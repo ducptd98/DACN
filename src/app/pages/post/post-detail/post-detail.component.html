@@ -1,4 +1,42 @@
 <app-page-top [isHomePage]="false" imgPageTop="assets/page-top-bg.png" [header]="'Bài đăng'"></app-page-top>
 <div class="container">
-    <p>post-detail works!</p>
+    <div class="row" style="display: block !important;">
+        <h1>This is a title</h1>
+        <ng-container [ngTemplateOutlet]="meta"></ng-container>
+        <span class="">
+            #tag
+        </span>
+        <div class="">
+            This is content
+        </div>
+        <hr>
+    </div>
+    <app-comment></app-comment>
+
+    <app-comment [isPost]="false"></app-comment>
+    <app-comment [isPost]="false"></app-comment>
+    <app-comment [isPost]="false"></app-comment>
+    <app-comment [isPost]="false"></app-comment>
 </div>
+<ng-template #meta>
+    <div class="article-meta">
+        <a href="/angular-forum/profile/answebdev">
+            <img src="https://static.productionready.io/images/smiley-cyrus.jpg">
+        </a>
+        <div class="info">
+            <a class="author" href="/angular-forum/profile/answebdev">
+                answebdev
+            </a>
+            <span class="date">June 24, 2020 </span>
+        </div>
+        <ng-container [ngTemplateOutlet]="favorite"></ng-container>
+    </div>
+</ng-template>
+<ng-template #favorite>
+    <div class="pull-xs-right">
+        <button class="btn btn-sm btn-outline-success">
+            <i class="fas fa-heart"></i>
+            0
+        </button>
+    </div>
+</ng-template>
