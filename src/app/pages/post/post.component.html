@@ -4,23 +4,43 @@
         <div class="col-md-9 col-lg-9 col-sm-12">
             <ngb-tabset [destroyOnHide]="false" (tabChange)="tabChange($event)">
                 <ngb-tab id="my">
-                    <ng-template ngbTabTitle><span [ngStyle]="{color: this.activeTab == 'my'? '#30caa0' : 'black'}">Your article</span></ng-template>
+                    <ng-template ngbTabTitle><span [ngStyle]="{color: this.activeTab == 'my'? '#30caa0' : 'black'}">Your
+                            article</span></ng-template>
                     <ng-template ngbTabContent>
                         <div class="">My</div>
-                        <app-article></app-article>
-                        <app-article></app-article>
-                        <app-article></app-article>
-                        <app-article></app-article>
+                        <div class="row justify-content-center">
+                            <form class="form-inline my-2 justify-content-center mb-2 col-12">
+                                <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm ..."
+                                    aria-label="Search" style="width: 30%;" formControlName="searchTerm">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm kiếm</button>
+                            </form>
+                        </div>
+                        <div class="">
+                            <app-article></app-article>
+                            <app-article></app-article>
+                            <app-article></app-article>
+                        </div>
                     </ng-template>
                 </ngb-tab>
                 <ngb-tab id="global">
-                    <ng-template ngbTabTitle><span [ngStyle]="{color: this.activeTab == 'global'? '#30caa0' : 'black'}">Global article</span></ng-template>
+                    <ng-template ngbTabTitle><span
+                            [ngStyle]="{color: this.activeTab == 'global'? '#30caa0' : 'black'}">Global article</span>
+                    </ng-template>
                     <ng-template ngbTabContent>
                         <div class="">Global</div>
-                        <app-article></app-article>
-                        <app-article></app-article>
-                        <app-article></app-article>
-                        <app-article></app-article>
+                        <div class="row justify-content-center">
+                            <form class="form-inline my-2 justify-content-center mb-2 col-12">
+                                <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm ..."
+                                    aria-label="Search" style="width: 30%;" formControlName="searchTerm">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm kiếm</button>
+                            </form>
+                        </div>
+                        <div class="">
+                            <app-article></app-article>
+                            <app-article></app-article>
+                            <app-article></app-article>
+                            <app-article></app-article>
+                        </div>
                     </ng-template>
                 </ngb-tab>
             </ngb-tabset>

@@ -1,3 +1,5 @@
+import { ApiErrorService } from './utilities/api-error.service';
+import { ResponseInterceptorService } from './utilities/response-interceptor.service';
 import { AlertProvider } from './utilities/alert.provider';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -16,7 +18,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { IconsProviderModule } from './icons-provider.module';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { registerLocaleData } from '@angular/common';
 // import en from '@angular/common/locales/en';
@@ -47,7 +49,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule
   ],
   // providers: [{ provide: NZ_I18N, useValue: en_US }],
-  providers: [AlertProvider],
+  providers: [
+    AlertProvider,
+    ApiErrorService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ResponseInterceptorService,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

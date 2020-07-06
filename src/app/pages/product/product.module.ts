@@ -1,3 +1,4 @@
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PageTopComponent } from './../../components/page-top/page-top.component';
 import { FacebookCustomService } from './../../../api/services/facebook-custom.service';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -26,12 +27,14 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
     OwlModule,
     SharedModule,
     ReactiveFormsModule,
-    FacebookModule.forRoot()
+    FacebookModule.forRoot(),
+    NgbModule
   ],
   providers: [
     ProductService,
     FacebookCustomService,
-    FacebookService
+    FacebookService,
+    NgbModal
     // { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
   ]
 })
