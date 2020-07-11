@@ -5,4 +5,6 @@ export interface IPost {
     content: string;
     tag: string;
     like: number;
+    created_at: Date;
+    updated_at: Date;
 }

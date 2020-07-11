@@ -15,10 +15,8 @@
                                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm kiếm</button>
                             </form>
                         </div>
-                        <div class="">
-                            <app-article></app-article>
-                            <app-article></app-article>
-                            <app-article></app-article>
+                        <div class="" *ngFor="let post of posts">
+                            <app-article [post]="post"></app-article>
                         </div>
                     </ng-template>
                 </ngb-tab>
@@ -35,11 +33,8 @@
                                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm kiếm</button>
                             </form>
                         </div>
-                        <div class="">
-                            <app-article></app-article>
-                            <app-article></app-article>
-                            <app-article></app-article>
-                            <app-article></app-article>
+                        <div class="" *ngFor="let post of posts">
+                            <app-article [post]="post"></app-article>
                         </div>
                     </ng-template>
                 </ngb-tab>

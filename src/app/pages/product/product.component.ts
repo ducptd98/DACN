@@ -1,9 +1,9 @@
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { ProductService } from './../../../api/services/product.service';
 import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product',
@@ -26,6 +26,8 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   searchForm: FormGroup;
 
+  destroy$: Subject<boolean> = new Subject<boolean>();
+
   constructor(private prodService: ProductService,
               private route: ActivatedRoute,
               private router: Router,
@@ -35,13 +37,14 @@ export class ProductComponent implements OnInit, OnDestroy {
     });
   }
   ngOnDestroy(): void {
-    this.subscription.forEach(item => item.unsubscribe());
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
     this.loading = false;
   }
 
   ngOnInit() {
     this.loading = true;
-    const routeSub = this.route.params.subscribe(routerParam => {
+    const routeSub = this.route.params.pipe(takeUntil(this.destroy$)).subscribe(routerParam => {
 
       this.cateId = routerParam.cateId;
       if (!routerParam.cateId) {
@@ -53,25 +56,23 @@ export class ProductComponent implements OnInit, OnDestroy {
         this.getProductByCategory(routerParam.cateId, 25, 0);
       }
     });
-    this.subscription.push(routeSub);
   }
   get f() {
     return this.searchForm.controls;
   }
 
   getById(prodId: string) {
-    const prodSub = this.prodService.getProduct(prodId).subscribe(
+    const prodSub = this.prodService.getProduct(prodId).pipe(takeUntil(this.destroy$)).subscribe(
       data => {
         console.log('@@@ prod by Id', data);
 
 
       },
       err => console.log('@@@ getById', err));
-    this.subscription.push(prodSub);
   }
   searchProductByName(name, page) {
     this.loading = true;
-    const prodSub = this.prodService.searchByName(name, page).subscribe(
+    const prodSub = this.prodService.searchByName(name, page).pipe(takeUntil(this.destroy$)).subscribe(
       res => {
         const data = JSON.parse(res.data);
         const total = +res.total_record;
@@ -88,12 +89,11 @@ export class ProductComponent implements OnInit, OnDestroy {
         this.router.navigate([`/product/search`, { name }]);
         this.loading = false;
       });
-    this.subscription.push(prodSub);
   }
 
   getProductByCategory(cateId: string, limit: number, offset: number) {
     this.loading = true;
-    const prodSub = this.prodService.getProductByCategory(cateId, limit, offset).subscribe(
+    const prodSub = this.prodService.getProductByCategory(cateId, limit, offset).pipe(takeUntil(this.destroy$)).subscribe(
       res => {
         const data = JSON.parse(res.data);
         const total = +res.total_record;
@@ -106,7 +106,6 @@ export class ProductComponent implements OnInit, OnDestroy {
       },
       err => console.log('@@@ getProductByCategory', err),
       () => this.loading = false);
-    this.subscription.push(prodSub);
   }
   changeCurPage(e) {
     // page 1: off = (1-1)*5 = 0

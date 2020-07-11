@@ -1,8 +1,8 @@
 <div class="article-preview">
     <ng-container [ngTemplateOutlet]="meta"></ng-container>
     <a class="preview-link" [routerLink]="['/post/1']">
-        <h1>This is a title</h1>
-        <p>This is a description</p><span>Read more...</span>
+        <h1>{{post?.title || 'This is a title'}}</h1>
+        <p>{{post?.content[0] | slice:0:150}}</p><span>Read more...</span>
         <ng-container [ngTemplateOutlet]="taglist"></ng-container>
     </a>
 </div>
@@ -16,7 +16,7 @@
             <a class="author" href="/angular-forum/profile/answebdev">
                 answebdev
             </a>
-            <span class="date">June 24, 2020 </span>
+            <span class="date">{{post?.created_at |date: 'short'}} </span>
         </div>
         <ng-container [ngTemplateOutlet]="favorite"></ng-container>
     </div>
@@ -26,15 +26,14 @@
     <div class="pull-xs-right">
         <button class="btn btn-sm btn-outline-success">
             <i class="fas fa-heart"></i>
-            0
+            {{post?.like || 0}}
         </button>
     </div>
 </ng-template>
 
 <ng-template #taglist>
     <ul class="tag-list">
-        <li class="tag-default tag-pill tag-outline"> awlefkjwaklef </li>
-        <li class="tag-default tag-pill tag-outline"> alwekajfklaw </li>
+        <li class="tag-default tag-pill tag-outline"> {{post?.tag}} </li>
         <!---->
     </ul>
 </ng-template>

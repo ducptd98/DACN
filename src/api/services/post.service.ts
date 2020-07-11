@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { IPost } from './../models/post.model';
 import { Observable, throwError } from 'rxjs';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -19,47 +20,64 @@ export class PostService {
     headers = headers.set('Content-Type', 'application/json');
     return this.http.get<any>(`${this.basePath}/api/post_recently`, {
       headers
-    });
+    }).pipe(
+      map(res => res.data)
+    );
   }
   getPostFavorite(): Observable<any> {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
     return this.http.get<any>(`${this.basePath}/api/post_favourite`, {
       headers
-    });
+    }).pipe(
+      map(res => res.data)
+    );
   }
   getPost(id): Observable<any> {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
     return this.http.get<any>(`${this.basePath}/api/post/` + id, {
       headers
-    });
+    }).pipe(
+      map(res => res.data),
+      map(result => {
+        const content = JSON.parse(result.content);
+        return { ...result, content };
+      })
+    );
   }
   getPosts(): Observable<any> {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
     return this.http.get<any>(`${this.basePath}/api/post`, {
       headers
-    });
+    }).pipe(
+      map(res => res.data.map(element => {
+        const content = JSON.parse(element.content);
+        return { ...element, content };
+      })),
+    );
   }
-  createPost(post: IPost): Observable<IPost> {
+  createPost(post: IPost): Observable<any> {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
-    return this.http.post<IPost>(`${this.basePath}/api/post`, post, {
+    return this.http.post<any>(`${this.basePath}/api/post`, post, {
       headers
-    });
+    }).pipe(
+      map(res => res.data)
+    );
   }
   updatePost(post: IPost): Observable<IPost> {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
-    return this.http.put<IPost>(`${this.basePath}/api/post`, post, {
+    return this.http.put<any>(`${this.basePath}/api/post`, post, {
       headers
     });
   }
   deletePost(id): Observable<IPost> {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
-    return this.http.delete<IPost>(`${this.basePath}/api/post`, {
+    return this.http.delete<any>(`${this.basePath}/api/post`, {
       headers
     });
   }

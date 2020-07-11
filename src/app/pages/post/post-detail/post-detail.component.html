@@ -1,26 +1,29 @@
 <app-page-top [isHomePage]="false" imgPageTop="assets/page-top-bg.png" [header]="'Bài đăng'"></app-page-top>
 <div class="container">
-    <div class="row" style="display: block !important;">
-        <h1>This is a title</h1>
-        <ng-container [ngTemplateOutlet]="meta"></ng-container>
-        <span class="">
-            #tag
-        </span>
-        <div class="">
-            This is content
+    <app-loading *ngIf="loading"></app-loading>
+    <div *ngIf="!loading" class="">
+        <div class="row" style="display: block !important;">
+            <h1>{{post?.title || 'This is a title'}}</h1>
+            <ng-container [ngTemplateOutlet]="meta"></ng-container>
+            <span class="">
+                #{{post?.tag || 'tag'}}
+            </span>
+            <div class="" style="white-space: pre-line">
+                {{post?.content || 'This is a content'}}
+            </div>
+            <hr>
         </div>
-        <hr>
-    </div>
-    <app-comment></app-comment>
+        <app-comment></app-comment>
 
-    <!-- <div class="" *ngFor="let cmt of cmts">
-
-    </div> -->
-    <div class="">
-        <app-comment [isPost]="false"></app-comment>
-        <app-comment [isPost]="false"></app-comment>
-        <app-comment [isPost]="false"></app-comment>
-        <app-comment [isPost]="false"></app-comment>
+        <!-- <div class="" *ngFor="let cmt of cmts">
+    
+        </div> -->
+        <div class="">
+            <app-comment [isPost]="false"></app-comment>
+            <app-comment [isPost]="false"></app-comment>
+            <app-comment [isPost]="false"></app-comment>
+            <app-comment [isPost]="false"></app-comment>
+        </div>
     </div>
 </div>
 <ng-template #meta>
@@ -32,7 +35,7 @@
             <a class="author" href="/angular-forum/profile/answebdev">
                 answebdev
             </a>
-            <span class="date">June 24, 2020 </span>
+            <span class="date">{{post?.created_at |date: 'short'}}</span>
         </div>
         <ng-container [ngTemplateOutlet]="favorite"></ng-container>
     </div>
@@ -41,7 +44,7 @@
     <div class="pull-xs-right">
         <button class="btn btn-sm btn-outline-success">
             <i class="fas fa-heart"></i>
-            0
+            {{post?.like || 0}}
         </button>
     </div>
 </ng-template>

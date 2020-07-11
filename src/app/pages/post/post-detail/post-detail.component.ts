@@ -1,3 +1,4 @@
+import { IPost } from './../../../../api/models/post.model';
 import { takeUntil } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -12,12 +13,16 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 export class PostDetailComponent implements OnInit, OnDestroy {
 
   destroy$: Subject<boolean> = new Subject<boolean>();
+  post: IPost;
+  loading = false;
 
   constructor(private postService: PostService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const routeSub = this.route.params.subscribe(routerParam => {
-      const postId = routerParam.productId;
+    const routeSub = this.route.params.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(routerParam => {
+      const postId = routerParam.id;
       this.getPost(postId);
     });
   }
@@ -27,10 +32,12 @@ export class PostDetailComponent implements OnInit, OnDestroy {
     this.destroy$.unsubscribe();
   }
   getPost(id) {
+    this.loading = true;
     this.postService.getPost(id).pipe(
       takeUntil(this.destroy$)
     ).subscribe(res => {
-      console.log('get Detail', res);
-    });
+      this.post = res;
+    }, e => console.log(e), () => { this.loading = false; }
+    );
   }
 }

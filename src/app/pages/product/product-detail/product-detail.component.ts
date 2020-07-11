@@ -4,7 +4,7 @@ import { PostService } from './../../../../api/services/post.service';
 import { FacebookService, InitParams, UIResponse, UIParams } from 'ngx-facebook';
 import { ProductService } from './../../../../api/services/product.service';
 import { Subscription, fromEvent, Observable, Subject } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { startWith, map, takeUntil } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -66,6 +66,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   postForm: FormGroup;
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private productSer: ProductService,
               private fb: FormBuilder,
               private postService: PostService,
@@ -143,6 +144,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   openModal(content) {
     this.modalService.open(content, { centered: true });
   }
+  closeModal() {
+    this.modalService.dismissAll();
+  }
   createPost() {
     if (this.postForm.invalid) {
       console.log('error');
@@ -153,10 +157,14 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       title: this.postForm.value.title,
       content: JSON.stringify(this.product.desc),
       like: 0,
-      tag: this.postForm.value.tag
+      tag: this.postForm.value.tag,
+      created_at: null,
+      updated_at: null
     };
     this.postService.createPost(post).pipe(takeUntil(this.destroy$)).subscribe(res => {
       console.log('createPost', res);
+      this.router.navigate(['/post/' + res.data.id]);
+      this.closeModal();
     });
   }
 }
