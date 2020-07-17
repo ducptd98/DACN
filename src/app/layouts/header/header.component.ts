@@ -1,14 +1,21 @@
-import { Subscription } from 'rxjs';
+import { ChangeDetectionStrategy } from '@angular/compiler/src/core';
+import { takeUntil } from 'rxjs/operators';
+import { UserService } from './../../../api/services/user.service';
+import { IUser } from './../../../api/models/user.model';
+import { Subscription, Subject } from 'rxjs';
 import { ICategory } from './../../../api/models/category.model';
 import { CategoryService } from './../../../api/services/category.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+
+  @Input() login = false;
+  @Input() user: IUser = null;
 
   loading = false;
   lv1 = new Array<any>();
@@ -19,21 +26,31 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   selectedItem: ICategory;
 
-  subscription: Subscription[] = [];
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private cateService: CategoryService) {
+
+  constructor(private cateService: CategoryService, private authService: UserService) {
     this.loadData();
   }
   ngOnDestroy(): void {
-    this.subscription.forEach(item => item.unsubscribe());
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 
   ngOnInit() {
+    this.login = this.authService.isAuthenticated();
+    const token = this.authService.getToken();
+    if (token) {
+      this.authService.getUser(token).subscribe(res => {
+        console.log('curUser', res);
+        this.user = res;
+      });
+    }
   }
   loadData() {
     this.loading = true;
     // this.loadingBar.start();
-    const cateSubscription = this.cateService.getAllNotPaging().subscribe(
+    const cateSubscription = this.cateService.getAllNotPaging().pipe(takeUntil(this.destroy$)).subscribe(
       data => {
         data.forEach(item => {
           if (item.parent_category === null) {
@@ -53,27 +70,29 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.getRentProduct();
       }
     );
-    this.subscription.push(cateSubscription);
   }
   getSaleProduct() {
-    const cateSubscription = this.cateService.getCategoryByParentCategory(this.Sale.url_encode).subscribe(
+    const cateSubscription = this.cateService.getCategoryByParentCategory(this.Sale.url_encode).pipe(takeUntil(this.destroy$)).subscribe(
       data => this.lv1 = data.map(item => {
         const title = item.url_site.split('/')[3];
         return Object.assign(item, { title });
       }),
       err => console.error('@@@ getSaleProduct', err)
     );
-    this.subscription.push(cateSubscription);
   }
 
   getRentProduct() {
-    const cateSubscription = this.cateService.getCategoryByParentCategory(this.Rent.url_encode).subscribe(
+    const cateSubscription = this.cateService.getCategoryByParentCategory(this.Rent.url_encode).pipe(takeUntil(this.destroy$)).subscribe(
       data => this.lv2 = data.map(item => {
         const title = item.url_site.split('/')[3];
         return Object.assign(item, { title });
       }),
       err => console.error('@@@ getRentProduct', err)
     );
-    this.subscription.push(cateSubscription);
+  }
+
+  logout() {
+    this.authService.logout();
+    window.location.reload();
   }
 }

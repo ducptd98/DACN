@@ -5,7 +5,7 @@
             <ngb-tabset [destroyOnHide]="false" (tabChange)="tabChange($event)">
                 <ngb-tab id="my">
                     <ng-template ngbTabTitle><span [ngStyle]="{color: this.activeTab == 'my'? '#30caa0' : 'black'}">Your
-                            article</span></ng-template>
+                            posts</span></ng-template>
                     <ng-template ngbTabContent>
                         <div class="">My</div>
                         <div class="row justify-content-center">
@@ -15,14 +15,15 @@
                                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm kiếm</button>
                             </form>
                         </div>
-                        <div class="" *ngFor="let post of posts">
+                        <div class="" *ngFor="let post of myPosts">
                             <app-article [post]="post"></app-article>
                         </div>
+                        <app-pagination [length]="posts.length" (changePage)="changeCurPage($event)" [curPage]="curPage"></app-pagination>
                     </ng-template>
                 </ngb-tab>
                 <ngb-tab id="global">
                     <ng-template ngbTabTitle><span
-                            [ngStyle]="{color: this.activeTab == 'global'? '#30caa0' : 'black'}">Global article</span>
+                            [ngStyle]="{color: this.activeTab == 'global'? '#30caa0' : 'black'}">Global posts</span>
                     </ng-template>
                     <ng-template ngbTabContent>
                         <div class="">Global</div>
@@ -36,6 +37,7 @@
                         <div class="" *ngFor="let post of posts">
                             <app-article [post]="post"></app-article>
                         </div>
+                        <app-pagination [length]="posts.length" (changePage)="changeCurPage($event)" [curPage]="curPage"></app-pagination>
                     </ng-template>
                 </ngb-tab>
             </ngb-tabset>

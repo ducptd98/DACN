@@ -15,12 +15,12 @@ export class ProductComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
   limit = 6;
   offset = 0;
+  curPage = 1;
+  total = 0;
   products = [];
   filterProducts = [];
-  curPage = 1;
   cateId = '';
   category = '';
-  total = 0;
 
   filter;
 

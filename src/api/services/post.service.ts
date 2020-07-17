@@ -1,7 +1,7 @@
 import { map } from 'rxjs/operators';
 import { IPost } from './../models/post.model';
 import { Observable, throwError } from 'rxjs';
-import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 
@@ -46,11 +46,14 @@ export class PostService {
       })
     );
   }
-  getPosts(): Observable<any> {
+  getPosts(page: number): Observable<any> {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
+    const params = new HttpParams();
+    params.append('page', page.toString());
     return this.http.get<any>(`${this.basePath}/api/post`, {
-      headers
+      headers,
+      params
     }).pipe(
       map(res => res.data.map(element => {
         const content = JSON.parse(element.content);

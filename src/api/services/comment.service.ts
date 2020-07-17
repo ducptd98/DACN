@@ -14,38 +14,38 @@ export class CommentService {
 
   constructor(private http: HttpClient) { }
 
-  createComment(cmt: IComment): Observable<IComment> {
+  createComment(cmt: IComment): Observable<any> {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
-    return this.http.post<IComment>(`${this.basePath}/api/comment`, cmt, {
+    return this.http.post<any>(`${this.basePath}/api/comment`, cmt, {
       headers
     });
   }
-  getComments(): Observable<IComment> {
+  getComments(): Observable<any> {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
-    return this.http.get<IComment>(`${this.basePath}/api/comment`, {
+    return this.http.get<any>(`${this.basePath}/api/comment`, {
       headers
     });
   }
-  getComment(id): Observable<IComment> {
+  getComment(id): Observable<any> {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
-    return this.http.get<IComment>(`${this.basePath}/api/comment/` + id, {
+    return this.http.get<any>(`${this.basePath}/api/comment/` + id, {
       headers
     });
   }
-  updateComment(id): Observable<IComment> {
+  updateComment(id): Observable<any> {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
-    return this.http.get<IComment>(`${this.basePath}/api/comment/` + id, {
+    return this.http.get<any>(`${this.basePath}/api/comment/` + id, {
       headers
     });
   }
-  deleteComment(id): Observable<IComment> {
+  deleteComment(id): Observable<any> {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
-    return this.http.get<IComment>(`${this.basePath}/api/comment/` + id, {
+    return this.http.delete<any>(`${this.basePath}/api/comment/` + id, {
       headers
     });
   }

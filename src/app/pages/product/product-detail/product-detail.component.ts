@@ -1,3 +1,4 @@
+import { UserService } from './../../../../api/services/user.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { IPost } from './../../../../api/models/post.model';
 import { PostService } from './../../../../api/services/post.service';
@@ -58,6 +59,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   product: any;
   productRelated = [];
   loading = true;
+  isLogin = false;
   currentUrl = '';
   isScreenSmall$: Observable<any>;
 
@@ -68,6 +70,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private productSer: ProductService,
+              private userService: UserService,
               private fb: FormBuilder,
               private postService: PostService,
               private modalService: NgbModal) {
@@ -97,6 +100,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       const productId = routerParam.productId;
       const category = routerParam.category;
       this.getProduct(productId);
+      this.isLogin = this.userService.isAuthenticated();
     });
   }
   private handleError(error) {
@@ -159,11 +163,15 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       like: 0,
       tag: this.postForm.value.tag,
       created_at: null,
-      updated_at: null
+      updated_at: null,
+      user_id: this.userService.curUser.id,
+      link: window.location.href,
+      comments: [],
+      user: null
     };
     this.postService.createPost(post).pipe(takeUntil(this.destroy$)).subscribe(res => {
       console.log('createPost', res);
-      this.router.navigate(['/post/' + res.data.id]);
+      this.router.navigate(['/post/' + res.id]);
       this.closeModal();
     });
   }

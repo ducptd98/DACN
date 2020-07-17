@@ -1,3 +1,5 @@
+import { ToastrService } from 'ngx-toastr';
+import { UserService } from './../../../api/services/user.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
@@ -13,12 +15,14 @@ export class LoginComponent implements OnInit {
   submitted = false;
 
   constructor(private fb: FormBuilder,
+              private authService: UserService,
+              private toastrService: ToastrService,
               private router: Router) { }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      email: ['nhoxku2019@gmail.com', [Validators.required, Validators.email]],
+      password: ['Test123!', [Validators.required, Validators.minLength(8)]]
     });
   }
   get f() {
@@ -32,5 +36,15 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    this.authService.login(this.f.email.value, this.f.password.value)
+      .subscribe(
+        res => {
+          console.log(res);
+          this.authService.setToken(res.token);
+          this.router.navigate(['/home']);
+
+        },
+        error => this.toastrService.error(error.error[0])
+      );
   }
 }

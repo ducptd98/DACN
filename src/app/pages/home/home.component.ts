@@ -55,6 +55,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   limit = 25;
   offset = 0;
 
+  total = [];
+
   constructor(private prodService: ProductService,
               private cateService: CategoryService,
               private toastrService: ToastrService) { }
@@ -65,6 +67,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getProductByCategory(this.cateId, this.limit, this.offset);
     this.getCategory();
+    this.getProductByLocation('Hồ Chí Minh');
+    this.getProductByLocation('Vũng Tàu');
+    this.getProductByLocation('Đồng Nai');
+    this.getProductByLocation('Bình Dương');
     this.toastrService.overlayContainer = this.toastContainer;
   }
 
@@ -109,5 +115,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   onDistrict(e) {
     console.log('onDistrict', e);
     this.district = e;
+  }
+
+  getProductByLocation(location: string) {
+    this.prodService.getProductByLocation(location).subscribe(res => {
+      this.total.push(res.total_record);
+    });
   }
 }

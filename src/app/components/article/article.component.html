@@ -10,11 +10,11 @@
 <ng-template #meta>
     <div class="article-meta">
         <a href="/angular-forum/profile/answebdev">
-            <img src="https://static.productionready.io/images/smiley-cyrus.jpg">
+            <img [src]="post?.user.avatar_path.encoded">
         </a>
         <div class="info">
             <a class="author" href="/angular-forum/profile/answebdev">
-                answebdev
+                {{post.user.name}}
             </a>
             <span class="date">{{post?.created_at |date: 'short'}} </span>
         </div>

@@ -11,21 +11,17 @@
 
 .dropdown > .dropdown-menu {
   background-color: #fff;
-  opacity: 0;
-  display: none;
+  // opacity: 0;
+  // display: none;
   transition: opacity 600ms, visibility 600ms;
 }
 
 .dropdown:hover > .dropdown-menu {
   opacity: 1;
   display: block;
-  top: 30px;
+  // top: 30px;
 }
 
-.dropdown > .dropdown-menu.show {
-  display: none;
-  // visibility: visible;
-}
 .header-top {
   padding-right: 25px;
   padding-left: 17px;

@@ -8,32 +8,36 @@
             <span class="">
                 #{{post?.tag || 'tag'}}
             </span>
-            <div class="" style="white-space: pre-line">
+            <p class="text-medium" style="white-space: pre-line">
                 {{post?.content || 'This is a content'}}
-            </div>
+            </p>
+            <a [href]="post?.link" class="text-medium" style="white-space: pre-line">
+                {{post?.link || 'This is a link'}}
+            </a>
             <hr>
         </div>
-        <app-comment></app-comment>
 
-        <!-- <div class="" *ngFor="let cmt of cmts">
-    
-        </div> -->
-        <div class="">
-            <app-comment [isPost]="false"></app-comment>
-            <app-comment [isPost]="false"></app-comment>
-            <app-comment [isPost]="false"></app-comment>
-            <app-comment [isPost]="false"></app-comment>
+        
+        <h3 *ngIf="!isLogin" class="text-secondary text-center">
+            <a [routerLink]="['/login']">Đăng nhập</a> để xem bình luận
+        </h3>
+        <div *ngIf="isLogin" class="">
+            <app-comment [postId]="post.id" (commentSubmit)="refresh($event)" [user]="this.user"></app-comment>
+            <div class="" *ngFor="let cmt of post.comments">
+                <app-comment [postId]="post.id" [isPost]="false" [contentValue]="cmt.content" [cmtId]="cmt.id" (commentRemove)="refresh($event)"></app-comment>
+            </div>
         </div>
     </div>
 </div>
 <ng-template #meta>
     <div class="article-meta">
         <a href="/angular-forum/profile/answebdev">
-            <img src="https://static.productionready.io/images/smiley-cyrus.jpg">
+            <!-- <img src="https://static.productionready.io/images/smiley-cyrus.jpg"> -->
+            <img [src]="user.avatar_path.encoded">
         </a>
         <div class="info">
             <a class="author" href="/angular-forum/profile/answebdev">
-                answebdev
+                {{user.name}}
             </a>
             <span class="date">{{post?.created_at |date: 'short'}}</span>
         </div>

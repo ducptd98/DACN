@@ -1,3 +1,4 @@
+import { AuthGuardGuard } from './utilities/auth-guard.guard';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NgModule } from '@angular/core';
@@ -37,17 +38,20 @@ const routes: Routes = [
       {
         path: 'post',
         loadChildren: () => import('./pages/post/post.module').then(m => m.PostModule),
-        data: { breadcrumb: 'Danh sách bài đăng' }
+        data: { breadcrumb: 'Danh sách bài đăng' },
+        // canActivate: [AuthGuardGuard]
       },
       {
         path: 'login',
         component: LoginComponent,
-        data: { breadcrumb: 'Đăng nhập' }
+        data: { breadcrumb: 'Đăng nhập' },
+        canActivate: [AuthGuardGuard]
       },
       {
         path: 'register',
         component: RegisterComponent,
-        data: { breadcrumb: 'Đăng kí' }
+        data: { breadcrumb: 'Đăng kí' },
+        canActivate: [AuthGuardGuard]
       },
       {
         path: '**',
