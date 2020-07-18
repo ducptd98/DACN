@@ -39,6 +39,14 @@ export class UserService {
     });
   }
 
+  updateInfo(id: number, newUser: IUser): Observable<any> {
+    let headers = this.defaultHeaders;
+    headers = headers.set('Content-Type', 'application/json');
+    return this.http.put<any>(`${this.basePath}/api/user/` + id, newUser, {
+      headers
+    });
+  }
+
   getUser(token: string): Observable<any> {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
@@ -69,7 +77,11 @@ export class UserService {
     return this.http.get<any>(`${this.basePath}/api/user/` + userId, {
       headers
     }).pipe(
-      map(res => res.posts)
+      map(res => res.post),
+      map(post => post.map(element => {
+        const content = JSON.parse(element.content);
+        return { ...element, content };
+      })),
     );
   }
 

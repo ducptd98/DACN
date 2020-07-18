@@ -73,7 +73,7 @@ export class PostService {
   updatePost(post: IPost): Observable<IPost> {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
-    return this.http.put<any>(`${this.basePath}/api/post`, post, {
+    return this.http.put<any>(`${this.basePath}/api/post/` + post.id, post, {
       headers
     });
   }
@@ -84,6 +84,35 @@ export class PostService {
       headers
     });
   }
+  getAllTag() {
+    let headers = this.defaultHeaders;
+    headers = headers.set('Content-Type', 'application/json');
+    const params = new HttpParams();
+    params.append('page', '1');
+    return this.http.get<any>(`${this.basePath}/api/post`, {
+      headers,
+      params
+    }).pipe(
+      map(res => res.data.map(item => item.tag)),
+    );
+  }
+
+  getPostsBytag(tag: string) {
+    let headers = this.defaultHeaders;
+    headers = headers.set('Content-Type', 'application/json');
+    const params = new HttpParams();
+    params.append('tag', tag);
+    return this.http.get<any>(`${this.basePath}/api/post_tag`, {
+      headers,
+      params
+    }).pipe(
+      map(res => res.data.map(element => {
+        const content = JSON.parse(element.content);
+        return { ...element, content };
+      })),
+    );
+  }
+
   handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error!';
     if (error.error instanceof ErrorEvent) {

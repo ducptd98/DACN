@@ -1,5 +1,6 @@
+import { Router, NavigationStart } from '@angular/router';
 import { ChangeDetectionStrategy } from '@angular/compiler/src/core';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, filter } from 'rxjs/operators';
 import { UserService } from './../../../api/services/user.service';
 import { IUser } from './../../../api/models/user.model';
 import { Subscription, Subject } from 'rxjs';
@@ -29,7 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   destroy$: Subject<boolean> = new Subject<boolean>();
 
 
-  constructor(private cateService: CategoryService, private authService: UserService) {
+  constructor(private cateService: CategoryService, private authService: UserService, private router: Router) {
     this.loadData();
   }
   ngOnDestroy(): void {
@@ -38,6 +39,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationStart)
+    )
+      .subscribe((event: NavigationStart) => {
+        // You only receive NavigationStart events
+        this.getCurUser();
+      });
+  }
+
+  getCurUser() {
     this.login = this.authService.isAuthenticated();
     const token = this.authService.getToken();
     if (token) {
@@ -47,10 +58,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
     }
   }
+
   loadData() {
     this.loading = true;
     // this.loadingBar.start();
-    const cateSubscription = this.cateService.getAllNotPaging().pipe(takeUntil(this.destroy$)).subscribe(
+    this.cateService.getAllNotPaging().pipe(takeUntil(this.destroy$)).subscribe(
       data => {
         data.forEach(item => {
           if (item.parent_category === null) {
@@ -72,7 +84,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     );
   }
   getSaleProduct() {
-    const cateSubscription = this.cateService.getCategoryByParentCategory(this.Sale.url_encode).pipe(takeUntil(this.destroy$)).subscribe(
+    this.cateService.getCategoryByParentCategory(this.Sale.url_encode).pipe(takeUntil(this.destroy$)).subscribe(
       data => this.lv1 = data.map(item => {
         const title = item.url_site.split('/')[3];
         return Object.assign(item, { title });
@@ -93,6 +105,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   logout() {
     this.authService.logout();
-    window.location.reload();
+    this.router.navigate(['/home']).then(() => window.location.reload());
   }
 }

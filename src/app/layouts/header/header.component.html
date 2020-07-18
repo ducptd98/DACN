@@ -30,8 +30,9 @@
                                 <img [src]="user?.avatar" alt=""> {{user?.name}}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownUser" style="z-index: 1030;">
-                                <a class="dropdown-item">Thông tin</a>
-                                <a class="dropdown-item" (click)="logout()">Đăng xuất</a>
+                                <a class="dropdown-item" [routerLink]="['/profile']" style="cursor: pointer;">Thông
+                                    tin</a>
+                                <a class="dropdown-item" style="cursor: pointer;" (click)="logout()">Đăng xuất</a>
                             </div>
                         </div>
                     </div>

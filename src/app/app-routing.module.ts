@@ -1,8 +1,10 @@
+import { PermissionGuard } from './utilities/permission.guard';
 import { AuthGuardGuard } from './utilities/auth-guard.guard';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 
 const routes: Routes = [
@@ -52,6 +54,12 @@ const routes: Routes = [
         component: RegisterComponent,
         data: { breadcrumb: 'Đăng kí' },
         canActivate: [AuthGuardGuard]
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        data: { breadcrumb: 'Hồ sơ' },
+        canActivate: [PermissionGuard]
       },
       {
         path: '**',

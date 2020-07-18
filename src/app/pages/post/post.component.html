@@ -2,23 +2,27 @@
 <div class="container mt-2">
     <div class="row">
         <div class="col-md-9 col-lg-9 col-sm-12">
-            <ngb-tabset [destroyOnHide]="false" (tabChange)="tabChange($event)">
+            <ngb-tabset [destroyOnHide]="false" (tabChange)="tabChange($event)" [activeId]="activeTab">
                 <ngb-tab id="my">
                     <ng-template ngbTabTitle><span [ngStyle]="{color: this.activeTab == 'my'? '#30caa0' : 'black'}">Your
                             posts</span></ng-template>
                     <ng-template ngbTabContent>
-                        <div class="">My</div>
-                        <div class="row justify-content-center">
-                            <form class="form-inline my-2 justify-content-center mb-2 col-12">
-                                <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm ..."
-                                    aria-label="Search" style="width: 30%;" formControlName="searchTerm">
-                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm kiếm</button>
-                            </form>
+                        <app-loading *ngIf="!(curUser !== null && myPosts.length > 0)"></app-loading>
+                        <div *ngIf="curUser !== null && myPosts.length > 0">
+                            <div class="">My</div>
+                            <div class="row justify-content-center">
+                                <form class="form-inline my-2 justify-content-center mb-2 col-12">
+                                    <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm ..."
+                                        aria-label="Search" style="width: 30%;" formControlName="searchTerm">
+                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm kiếm</button>
+                                </form>
+                            </div>
+                            <div class="" *ngFor="let post of myPosts">
+                                <app-article [post]="post" [user]="curUser"></app-article>
+                            </div>
+                            <app-pagination [length]="totalMyPost" [limit]="this.limit"
+                                (changePage)="changeCurPage($event)" [curPage]="curPage"></app-pagination>
                         </div>
-                        <div class="" *ngFor="let post of myPosts">
-                            <app-article [post]="post"></app-article>
-                        </div>
-                        <app-pagination [length]="posts.length" (changePage)="changeCurPage($event)" [curPage]="curPage"></app-pagination>
                     </ng-template>
                 </ngb-tab>
                 <ngb-tab id="global">
@@ -26,18 +30,22 @@
                             [ngStyle]="{color: this.activeTab == 'global'? '#30caa0' : 'black'}">Global posts</span>
                     </ng-template>
                     <ng-template ngbTabContent>
-                        <div class="">Global</div>
-                        <div class="row justify-content-center">
-                            <form class="form-inline my-2 justify-content-center mb-2 col-12">
-                                <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm ..."
-                                    aria-label="Search" style="width: 30%;" formControlName="searchTerm">
-                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm kiếm</button>
-                            </form>
+                        <app-loading *ngIf="!(curUser !== null && myPosts.length > 0)"></app-loading>
+                        <div *ngIf="(curUser !== null && myPosts.length > 0)">
+                            <div class="">Global</div>
+                            <div class="row justify-content-center">
+                                <form class="form-inline my-2 justify-content-center mb-2 col-12">
+                                    <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm ..."
+                                        aria-label="Search" style="width: 30%;" formControlName="searchTerm">
+                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm kiếm</button>
+                                </form>
+                            </div>
+                            <div class="" *ngFor="let post of posts">
+                                <app-article [post]="post"></app-article>
+                            </div>
+                            <app-pagination [length]="totalGlobalPost" [limit]="this.limit"
+                                (changePage)="changeCurPage($event)" [curPage]="curPage"></app-pagination>
                         </div>
-                        <div class="" *ngFor="let post of posts">
-                            <app-article [post]="post"></app-article>
-                        </div>
-                        <app-pagination [length]="posts.length" (changePage)="changeCurPage($event)" [curPage]="curPage"></app-pagination>
                     </ng-template>
                 </ngb-tab>
             </ngb-tabset>
@@ -51,14 +59,6 @@
 </div>
 <ng-template #tag>
     <div class="tag-list">
-        <a class="tag-default tag-pill">SIDA</a>
-        <a class="tag-default tag-pill">Dragon</a>
-        <a class="tag-default tag-pill">Butt</a>
-        <a class="tag-default tag-pill">Tag1</a>
-        <a class="tag-default tag-pill">Tag2</a>
-        <a class="tag-default tag-pill">Tag2</a>
-        <a class="tag-default tag-pill">Tag2</a>
-        <a class="tag-default tag-pill">Tag2</a>
-        <a class="tag-default tag-pill">Tag2</a>
+        <a *ngFor="let item of tags" class="tag-default tag-pill" (click)="getPostsByTag(item)">{{item}}</a>
     </div>
 </ng-template>

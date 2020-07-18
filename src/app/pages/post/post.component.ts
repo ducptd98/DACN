@@ -14,31 +14,49 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 export class PostComponent implements OnInit, OnDestroy {
   activeTab = 'my';
   destroy$: Subject<boolean> = new Subject<boolean>();
+
+  tags: string[] = [];
   posts: IPost[] = [];
   myPosts: IPost[] = [];
+
+  totalGlobalPost = 0;
+  totalMyPost = 0;
 
   limit = 6;
   offset = 0;
   curPage = 1;
-  total = 0;
 
   curUser: IUser;
 
   constructor(private postService: PostService, private userService: UserService) { }
 
   ngOnInit() {
-    this.curUser = this.userService.curUser;
+    // this.curUser = this.userService.curUser;
+    this.getCurUser();
     this.getAllPost();
-    this.getAllPostOfCurUser();
+    this.getAllTags();
   }
   ngOnDestroy() {
     this.destroy$.next(true);
     // Unsubscribe from the subject
     this.destroy$.unsubscribe();
   }
+  getCurUser() {
+    const token = this.userService.getToken();
+    if (token) {
+      this.userService.getUser(token).subscribe(res => {
+        this.curUser = res;
+        this.getAllPostOfCurUser();
+      });
+    }
+  }
   tabChange(e) {
     console.log(e);
     this.activeTab = e.nextId;
+    this.limit = 6;
+    this.offset = 0;
+    this.curPage = 1;
+    this.activeTab === 'my' ? this.getAllPostOfCurUser() : this.getAllPost();
   }
   getAllPost() {
     this.postService.getPosts(this.curPage).pipe(
@@ -46,11 +64,35 @@ export class PostComponent implements OnInit, OnDestroy {
     ).subscribe(res => {
       console.log('getAllPost', res);
       this.posts = res;
+      this.totalGlobalPost = this.posts.length;
+      this.posts = this.posts.slice(this.offset, this.offset + this.limit);
     });
   }
   getAllPostOfCurUser() {
     this.userService.getPostsByUser(this.curUser.id).subscribe(res => {
+      console.log('mypost', res);
+
       this.myPosts = res;
+      this.totalMyPost = this.myPosts.length;
+      this.myPosts = this.myPosts.slice(this.offset, this.offset + this.limit);
+    });
+  }
+
+  getAllTags() {
+    this.postService.getAllTag().pipe(takeUntil(this.destroy$)).subscribe(
+      data => {
+        console.log('get all tag', data);
+
+        this.tags = data;
+      }
+    );
+  }
+
+  getPostsByTag(tag) {
+    this.activeTab = 'global';
+    this.postService.getPostsBytag(tag).pipe(takeUntil(this.destroy$)).subscribe(data => {
+      console.log('PostComponent -> getPostsByTag -> data', data);
+      this.posts = data;
     });
   }
   changeCurPage(e) {
@@ -64,5 +106,6 @@ export class PostComponent implements OnInit, OnDestroy {
     this.offset = (pageNumber - 1) * this.limit;
     this.curPage = pageNumber;
     this.getAllPost();
+    this.getAllPostOfCurUser();
   }
 }

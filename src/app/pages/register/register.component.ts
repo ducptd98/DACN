@@ -1,8 +1,9 @@
+import { takeUntil } from 'rxjs/operators';
 import { IUser } from './../../../api/models/user.model';
 import { UserService } from './../../../api/services/user.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { MustMatch } from 'src/app/utilities/confirmPass.validators';
 
@@ -15,7 +16,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   registerForm: FormGroup;
   submitted = false;
-  subscription: Subscription = new Subscription();
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(private fb: FormBuilder, private authService: UserService, private router: Router) { }
 
@@ -31,7 +32,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     });
   }
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
   get f() {
     return this.registerForm.controls;
@@ -59,7 +61,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       avatar_path: null,
       remember_token: null
     };
-    this.authService.register(user).subscribe(res => {
+    this.authService.register(user).pipe(takeUntil(this.destroy$)).subscribe(res => {
       console.log(res);
       this.router.navigate(['/login']);
     });

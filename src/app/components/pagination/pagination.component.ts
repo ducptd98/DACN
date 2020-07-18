@@ -9,7 +9,7 @@ export class PaginationComponent implements OnInit {
 
   page = 1;
   totalRecord: number;
-  limit = 25;
+  @Input() limit = 25;
   offset = 0;
 
   @Output() changePage: EventEmitter<any> = new EventEmitter<any>();

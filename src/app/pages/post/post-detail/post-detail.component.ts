@@ -69,4 +69,13 @@ export class PostDetailComponent implements OnInit, OnDestroy {
     }, e => console.log(e), () => { this.loading = false; }
     );
   }
+
+  handleLike() {
+    this.post.like++;
+    this.postService.updatePost(this.post).pipe(takeUntil(this.destroy$)).subscribe(
+      data => {
+        console.log('update post', data);
+      }
+    );
+  }
 }

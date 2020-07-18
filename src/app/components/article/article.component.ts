@@ -1,3 +1,4 @@
+import { IUser } from './../../../api/models/user.model';
 import { IPost } from './../../../api/models/post.model';
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -9,10 +10,12 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ArticleComponent implements OnInit {
 
   @Input() post: IPost;
+  @Input() user: IUser;
 
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }

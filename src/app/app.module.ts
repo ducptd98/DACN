@@ -1,3 +1,5 @@
+import { PermissionGuard } from './utilities/permission.guard';
+import { ProfileComponent } from './pages/profile/profile.component';
 import { AuthGuardGuard } from './utilities/auth-guard.guard';
 import { UserService } from './../api/services/user.service';
 import { ApiErrorService } from './utilities/api-error.service';
@@ -39,6 +41,7 @@ function getToken() {
     FooterComponent,
     LoginComponent,
     RegisterComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +74,8 @@ function getToken() {
       useClass: ResponseInterceptorService,
       multi: true
     },
-    AuthGuardGuard
+    AuthGuardGuard,
+    PermissionGuard
   ],
   bootstrap: [AppComponent]
 })
