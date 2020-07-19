@@ -6,7 +6,7 @@ import { ApiErrorService } from './utilities/api-error.service';
 import { ResponseInterceptorService } from './utilities/response-interceptor.service';
 import { AlertProvider } from './utilities/alert.provider';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, forwardRef } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -71,7 +71,7 @@ function getToken() {
     UserService,
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: ResponseInterceptorService,
+      useClass: forwardRef(() => ResponseInterceptorService),
       multi: true
     },
     AuthGuardGuard,

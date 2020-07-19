@@ -1,3 +1,5 @@
+import { IProduct } from './../../../api/models/product.model';
+import { IUser } from './../../../api/models/user.model';
 import { Component, OnInit, Input } from '@angular/core';
 import { ControlContainer, FormGroupDirective } from '@angular/forms';
 
@@ -9,6 +11,8 @@ import { ControlContainer, FormGroupDirective } from '@angular/forms';
 export class FeaturedCardComponent implements OnInit {
 
   @Input() srcImage: string;
+  @Input() product: IProduct;
+  @Input() user: IUser;
   // can truyen object
 
   constructor() { }

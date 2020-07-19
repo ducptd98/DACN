@@ -18,27 +18,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   mySlideOptions = { items: 1, dots: true, nav: false, autoplay: true, loop: true };
   data = [
     {
-      descriptions: '“Leramiz was quick to understand my needs and steer me in the right direction. Their professionalism' +
-        'and warmth made the process of finding a suitable home a lot less stressful than it could have been.' +
-        'Thanks, agent Tony Holland.”',
-      name: 'Stacy Mc',
-      title: 'CEP’s Director',
+      descriptions: '“Đây là người thiết kế trang web.”',
+      name: 'Phạm Thanh Đức',
+      title: 'Frontend Developer',
       img: 'review/1.jpg'
     },
     {
-      descriptions: '“Leramiz was quick to understand my needs and steer me in the right direction. Their professionalism' +
-        'and warmth made the process of finding a suitable home a lot less stressful than it could have been.' +
-        'Thanks, agent Tony Holland.”',
-      name: 'Stacy Mc Neeley',
-      title: 'CEP’s Director',
-      img: 'review/1.jpg'
-    },
-    {
-      descriptions: '“Leramiz was quick to understand my needs and steer me in the right direction. Their professionalism' +
-        'and warmth made the process of finding a suitable home a lot less stressful than it could have been.' +
-        'Thanks, agent Tony Holland.”',
-      name: 'Mc Neeley',
-      title: 'CEP’s Director',
+      descriptions: '“Đây là người thiết kế dữ liệu trang web.”',
+      name: 'Hoàng Văn Châu',
+      title: 'Backend Devloper',
       img: 'review/1.jpg'
     },
   ];

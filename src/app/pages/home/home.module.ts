@@ -1,10 +1,11 @@
+import { ResponseInterceptorService } from './../../utilities/response-interceptor.service';
 import { PageTopComponent } from './../../components/page-top/page-top.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LocationService } from './../../../api/services/location.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CategoryService } from './../../../api/services/category.service';
 import { ProductService } from './../../../api/services/product.service';
-import { NgModule } from '@angular/core';
+import { NgModule, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
 import { Routes, RouterModule } from '@angular/router';
@@ -38,7 +39,11 @@ const routes: Routes = [
     ProductService,
     CategoryService,
     LocationService,
-    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: forwardRef(() => ResponseInterceptorService),
+      multi: true
+    },
   ]
 })
 export class HomeModule { }

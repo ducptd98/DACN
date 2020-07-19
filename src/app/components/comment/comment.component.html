@@ -1,14 +1,16 @@
 <div class="row">
     <div class="col-xs-12 col-md-8 offset-2 col-lg-8 mb-5">
         <form action="" class="card w-100">
-            <textarea placeholder="Write a comment..." rows="3" class="form-control" [value]="contentValue" (change)="handleChange($event)">
+            <textarea placeholder="Write a comment..." rows="3" class="form-control" [value]="contentValue"
+                (change)="handleChange($event)">
             </textarea>
             <div class="card-footer text-muted d-flex justify-content-between">
                 <a href="/angular-forum/profile/answebdev">
                     <img src="https://static.productionready.io/images/smiley-cyrus.jpg">
                 </a>
                 <button *ngIf="this.isPost" type="button" class="btn btn-primary" (click)="comment()">Đăng</button>
-                <button *ngIf="!this.isPost" type="button" style="border: none; background: transparent;" (click)="deleteCmt()">
+                <button *ngIf="!this.isPost" type="button" style="border: none; background: transparent;"
+                    [disabled]="post.user_id !== user.id" (click)="deleteCmt()">
                     <i class="fas fa-trash-alt"></i>
                 </button>
             </div>

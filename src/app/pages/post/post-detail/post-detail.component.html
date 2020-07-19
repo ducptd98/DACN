@@ -22,9 +22,9 @@
             <a [routerLink]="['/login']">Đăng nhập</a> để xem bình luận
         </h3>
         <div *ngIf="isLogin" class="">
-            <app-comment [postId]="post.id" (commentSubmit)="refresh($event)" [user]="this.user"></app-comment>
+            <app-comment [post]="post" (commentSubmit)="refresh($event)" [user]="this.user"></app-comment>
             <div class="" *ngFor="let cmt of post.comments">
-                <app-comment [postId]="post.id" [isPost]="false" [contentValue]="cmt.content" [cmtId]="cmt.id" (commentRemove)="refresh($event)"></app-comment>
+                <app-comment [post]="post" [isPost]="false" [contentValue]="cmt.content" [cmtId]="cmt.id" (commentRemove)="refresh($event)"></app-comment>
             </div>
         </div>
     </div>

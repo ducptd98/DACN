@@ -56,7 +56,8 @@ export class PostComponent implements OnInit, OnDestroy {
     this.limit = 6;
     this.offset = 0;
     this.curPage = 1;
-    this.activeTab === 'my' ? this.getAllPostOfCurUser() : this.getAllPost();
+    // tslint:disable-next-line:no-unused-expression
+    this.activeTab === 'my' && this.curUser ? this.getAllPostOfCurUser() : this.getAllPost();
   }
   getAllPost() {
     this.postService.getPosts(this.curPage).pipe(

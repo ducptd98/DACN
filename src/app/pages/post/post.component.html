@@ -7,21 +7,26 @@
                     <ng-template ngbTabTitle><span [ngStyle]="{color: this.activeTab == 'my'? '#30caa0' : 'black'}">Your
                             posts</span></ng-template>
                     <ng-template ngbTabContent>
-                        <app-loading *ngIf="!(curUser !== null && myPosts.length > 0)"></app-loading>
-                        <div *ngIf="curUser !== null && myPosts.length > 0">
-                            <div class="">My</div>
-                            <div class="row justify-content-center">
-                                <form class="form-inline my-2 justify-content-center mb-2 col-12">
-                                    <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm ..."
-                                        aria-label="Search" style="width: 30%;" formControlName="searchTerm">
-                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm kiếm</button>
-                                </form>
+                        <div *ngIf="!curUser">
+                            Cần <a [routerLink]="['/login']">Đăng nhập</a> để xem bài chia sẻ
+                        </div>
+                        <div *ngIf="curUser">
+                            <app-loading *ngIf="(myPosts.length == 0)"></app-loading>
+                            <div *ngIf="(myPosts.length > 0)">
+                                <div class="row justify-content-center">
+                                    <form class="form-inline my-2 justify-content-center mb-2 col-12">
+                                        <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm ..."
+                                            aria-label="Search" style="width: 30%;" formControlName="searchTerm">
+                                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm
+                                            kiếm</button>
+                                    </form>
+                                </div>
+                                <div class="" *ngFor="let post of myPosts">
+                                    <app-article [post]="post" [user]="curUser"></app-article>
+                                </div>
+                                <app-pagination [length]="totalMyPost" [limit]="this.limit"
+                                    (changePage)="changeCurPage($event)" [curPage]="curPage"></app-pagination>
                             </div>
-                            <div class="" *ngFor="let post of myPosts">
-                                <app-article [post]="post" [user]="curUser"></app-article>
-                            </div>
-                            <app-pagination [length]="totalMyPost" [limit]="this.limit"
-                                (changePage)="changeCurPage($event)" [curPage]="curPage"></app-pagination>
                         </div>
                     </ng-template>
                 </ngb-tab>
@@ -30,9 +35,11 @@
                             [ngStyle]="{color: this.activeTab == 'global'? '#30caa0' : 'black'}">Global posts</span>
                     </ng-template>
                     <ng-template ngbTabContent>
-                        <app-loading *ngIf="!(curUser !== null && myPosts.length > 0)"></app-loading>
-                        <div *ngIf="(curUser !== null && myPosts.length > 0)">
-                            <div class="">Global</div>
+                        <app-loading *ngIf="(posts.length == 0)"></app-loading>
+                        <div *ngIf="(posts.length > 0)" [ngStyle]="{'pointer-events': this.curUser ? 'all':'none'}">
+                            <div *ngIf="!curUser">
+                                Cần <a [routerLink]="['/login']">Đăng nhập</a> để xem chi tiết bài chia sẻ
+                            </div>
                             <div class="row justify-content-center">
                                 <form class="form-inline my-2 justify-content-center mb-2 col-12">
                                     <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm ..."

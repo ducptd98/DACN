@@ -1,3 +1,4 @@
+import { IPost } from './../../../api/models/post.model';
 import { IUser } from './../../../api/models/user.model';
 import { IComment } from './../../../api/models/comment.model';
 import { CommentService } from './../../../api/services/comment.service';
@@ -10,7 +11,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class CommentComponent implements OnInit {
   @Input() isPost = true;
-  @Input() postId: number;
+  @Input() post: IPost;
   @Input() user: IUser;
   @Input() contentValue = '';
   @Input() cmtId: number;
@@ -28,7 +29,7 @@ export class CommentComponent implements OnInit {
   comment() {
     const cmt: IComment = {
       id: null,
-      post_id: this.postId,
+      post_id: this.post.id,
       content: this.contentValue,
       user: null,
       user_id: this.user.id

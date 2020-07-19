@@ -1,3 +1,4 @@
+import { ResponseInterceptorService } from './../../utilities/response-interceptor.service';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PageTopComponent } from './../../components/page-top/page-top.component';
 import { FacebookCustomService } from './../../../api/services/facebook-custom.service';
@@ -6,7 +7,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ProductService } from './../../../api/services/product.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { OwlModule } from 'ngx-owl-carousel';
-import { NgModule } from '@angular/core';
+import { NgModule, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FacebookModule, FacebookService } from 'ngx-facebook';
 
@@ -34,8 +35,12 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
     ProductService,
     FacebookCustomService,
     FacebookService,
-    NgbModal
-    // { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
+    NgbModal,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: forwardRef(() => ResponseInterceptorService),
+      multi: true
+    },
   ]
 })
 export class ProductModule { }
