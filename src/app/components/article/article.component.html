@@ -1,6 +1,6 @@
 <div class="article-preview">
     <ng-container [ngTemplateOutlet]="meta"></ng-container>
-    <a class="preview-link" [routerLink]="['/post/1']">
+    <a class="preview-link" [routerLink]="['/post/'+post.id]">
         <h1>{{post?.title || 'This is a title'}}</h1>
         <p>{{post?.content[0] | slice:0:150}}</p><span>Read more...</span>
         <ng-container [ngTemplateOutlet]="taglist"></ng-container>

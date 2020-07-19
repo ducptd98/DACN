@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { takeUntil } from 'rxjs/operators';
 import { IUser } from './../../../api/models/user.model';
 import { MustMatch } from 'src/app/utilities/confirmPass.validators';
@@ -21,9 +22,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   loading = false;
 
-  constructor(private fb: FormBuilder, private authService: UserService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: UserService, private toastrService: ToastrService) {
     this.getCurUser();
-   }
+  }
   ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
@@ -59,7 +60,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.submitted = true;
 
     if (this.profileForm.invalid) {
-      alert('invalid');
       return;
     }
 
@@ -74,7 +74,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
     const user: IUser = { ...this.curUser, ...info };
     this.authService.updateInfo(this.curUser.id, user).pipe(takeUntil(this.destroy$)).subscribe(res => {
       console.log(res);
-
+      this.toastrService.success('Cập nhật thành công', 'Thành công');
+      this.f.password.setValue('');
+      this.f.confirmPass.setValue('');
     });
   }
 

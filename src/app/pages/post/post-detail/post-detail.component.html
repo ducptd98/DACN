@@ -24,7 +24,7 @@
         <div *ngIf="isLogin" class="">
             <app-comment [post]="post" (commentSubmit)="refresh($event)" [user]="this.user"></app-comment>
             <div class="" *ngFor="let cmt of post.comments">
-                <app-comment [post]="post" [isPost]="false" [contentValue]="cmt.content" [cmtId]="cmt.id" (commentRemove)="refresh($event)"></app-comment>
+                <app-comment [user]="user" [post]="post" [isPost]="false" [contentValue]="cmt.content" [cmtId]="cmt.id" (commentRemove)="refresh($event)"></app-comment>
             </div>
         </div>
     </div>
@@ -33,11 +33,11 @@
     <div class="article-meta">
         <a href="/angular-forum/profile/answebdev">
             <!-- <img src="https://static.productionready.io/images/smiley-cyrus.jpg"> -->
-            <img [src]="user.avatar_path.encoded">
+            <img [src]="post?.user?.avatar_path.encoded">
         </a>
         <div class="info">
             <a class="author" href="/angular-forum/profile/answebdev">
-                {{user.name}}
+                {{post?.user?.name}}
             </a>
             <span class="date">{{post?.created_at |date: 'short'}}</span>
         </div>

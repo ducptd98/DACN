@@ -24,6 +24,8 @@ export class CommentComponent implements OnInit {
   constructor(private cmtService: CommentService) { }
 
   ngOnInit() {
+    console.log('CommentComponent -> post', this.post);
+    console.log('CommentComponent -> user', this.user);
   }
 
   comment() {

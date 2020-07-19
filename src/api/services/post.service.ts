@@ -73,7 +73,8 @@ export class PostService {
   updatePost(post: IPost): Observable<IPost> {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
-    return this.http.put<any>(`${this.basePath}/api/post/` + post.id, post, {
+    const newPost = {...post, content: JSON.stringify(post.content)};
+    return this.http.put<any>(`${this.basePath}/api/post/` + post.id, newPost, {
       headers
     });
   }
@@ -89,12 +90,10 @@ export class PostService {
     headers = headers.set('Content-Type', 'application/json');
     const params = new HttpParams();
     params.append('page', '1');
-    return this.http.get<any>(`${this.basePath}/api/post`, {
+    return this.http.get<any>(`${this.basePath}/api/get-all-tag`, {
       headers,
       params
-    }).pipe(
-      map(res => res.data.map(item => item.tag)),
-    );
+    });
   }
 
   getPostsBytag(tag: string) {

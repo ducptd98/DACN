@@ -28,10 +28,13 @@ export class PostDetailComponent implements OnInit, OnDestroy {
     const routeSub = this.route.params.pipe(
       takeUntil(this.destroy$)
     ).subscribe(routerParam => {
+
       const postId = routerParam.id;
-      this.postId = postId;
+      this.postId = parseInt(postId, 1);
+      console.log('routerParam', this.postId);
       this.isLogin = this.userService.isAuthenticated();
       this.getPost(postId);
+      this.getCurUser();
     });
   }
   ngOnDestroy() {
@@ -45,15 +48,19 @@ export class PostDetailComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     ).subscribe(res => {
       this.post = res;
-      if (res.user) {
-        this.user = res.user;
-      }
       console.log('PostDetailComponent -> getPost -> res', res);
     }, e => console.log(e), () => { this.loading = false; }
     );
   }
-  getComments() {
-
+  getCurUser() {
+    this.loading = true;
+    const token = this.userService.getToken();
+    if (token) {
+      this.userService.getUser(token).subscribe(res => {
+        this.user = res;
+        this.loading = false;
+      });
+    }
   }
   refresh(event) {
     console.log('refresh');
@@ -62,9 +69,6 @@ export class PostDetailComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     ).subscribe(res => {
       this.post = res;
-      if (res.user) {
-        this.user = res.user;
-      }
       console.log('PostDetailComponent -> getPost -> res', res);
     }, e => console.log(e), () => { this.loading = false; }
     );

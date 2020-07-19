@@ -24,6 +24,10 @@ export class ResponseInterceptorService implements HttpInterceptor {
             if (errorsStatus.includes(error.status)) {
               this.alert.error(this._getMessage(error).message);
               this.toastrService.error(this._getMessage(error).message);
+              if (this._getMessage(error).message === 'Token has expired') {
+                localStorage.clear();
+                window.location.reload();
+            }
               return throwError(this._getMessage(error));
             } else {
               return throwError(error);

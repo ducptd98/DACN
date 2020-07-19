@@ -6,11 +6,11 @@
             </textarea>
             <div class="card-footer text-muted d-flex justify-content-between">
                 <a href="/angular-forum/profile/answebdev">
-                    <img src="https://static.productionready.io/images/smiley-cyrus.jpg">
+                    <img [src]="!this.isPost ? post?.user?.avatar_path.encoded: user?.avatar_path.encoded">
                 </a>
                 <button *ngIf="this.isPost" type="button" class="btn btn-primary" (click)="comment()">Đăng</button>
                 <button *ngIf="!this.isPost" type="button" style="border: none; background: transparent;"
-                    [disabled]="post.user_id !== user.id" (click)="deleteCmt()">
+                    [hidden]="post?.user_id !== user?.id" (click)="deleteCmt()">
                     <i class="fas fa-trash-alt"></i>
                 </button>
             </div>
