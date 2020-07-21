@@ -76,7 +76,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
       console.log(res);
       this.toastrService.success('Cập nhật thành công', 'Thành công');
       this.f.password.setValue('');
+      this.f.password.clearValidators();
       this.f.confirmPass.setValue('');
+      this.f.confirmPass.clearValidators();
     });
   }
 
