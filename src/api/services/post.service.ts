@@ -49,16 +49,20 @@ export class PostService {
   getPosts(page: number): Observable<any> {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
-    const params = new HttpParams();
-    params.append('page', page.toString());
+    let params = new HttpParams();
+    params = params.set('page', page.toString());
     return this.http.get<any>(`${this.basePath}/api/post`, {
       headers,
       params
     }).pipe(
-      map(res => res.data.map(element => {
-        const content = JSON.parse(element.content);
-        return { ...element, content };
-      })),
+      map(res => {
+        const data = res.data.map(element => {
+          const content = JSON.parse(element.content);
+          return { ...element, content };
+        });
+        const total = res.total;
+        return { data, total };
+      }),
     );
   }
   createPost(post: IPost): Observable<any> {
@@ -73,7 +77,7 @@ export class PostService {
   updatePost(post: IPost): Observable<IPost> {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
-    const newPost = {...post, content: JSON.stringify(post.content)};
+    const newPost = { ...post, content: JSON.stringify(post.content) };
     return this.http.put<any>(`${this.basePath}/api/post/` + post.id, newPost, {
       headers
     });
@@ -88,19 +92,18 @@ export class PostService {
   getAllTag() {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
-    const params = new HttpParams();
-    params.append('page', '1');
+    let params = new HttpParams();
+    params = params.set('page', '1');
     return this.http.get<any>(`${this.basePath}/api/get-all-tag`, {
       headers,
       params
     });
   }
 
-  getPostsBytag(tag: string) {
+  getPostsByTag(tag: string) {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
-    const params = new HttpParams();
-    params.append('tag', tag);
+    const params = new HttpParams().set('tag', tag);
     return this.http.get<any>(`${this.basePath}/api/post_tag`, {
       headers,
       params
@@ -109,6 +112,30 @@ export class PostService {
         const content = JSON.parse(element.content);
         return { ...element, content };
       })),
+    );
+  }
+  searchPost(searchTerm: string, userId: number) {
+    let headers = this.defaultHeaders;
+    headers = headers.set('Content-Type', 'application/json');
+    let params = new HttpParams();
+    if (searchTerm) {
+      params = params.set('q', searchTerm);
+    }
+    if (userId) {
+      params = params.set('userid', userId.toString());
+    }
+    return this.http.get<any>(`${this.basePath}/api/post_search`, {
+      headers,
+      params
+    }).pipe(
+      map(res => {
+        const data = res.data.map(element => {
+          const content = JSON.parse(element.content);
+          return { ...element, content };
+        });
+        const total = res.total;
+        return { data, total };
+      }),
     );
   }
 

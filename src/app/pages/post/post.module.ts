@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ResponseInterceptorService } from './../../utilities/response-interceptor.service';
 import { CommentComponent } from './../../components/comment/comment.component';
@@ -24,6 +25,7 @@ import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
     PostRoutingModule,
     SharedModule,
     NgbTabsetModule,
+    ReactiveFormsModule
   ],
   providers: [
     {

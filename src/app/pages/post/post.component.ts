@@ -1,3 +1,4 @@
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { IUser } from './../../../api/models/user.model';
 import { UserService } from './../../../api/services/user.service';
 import { IPost } from './../../../api/models/post.model';
@@ -27,8 +28,22 @@ export class PostComponent implements OnInit, OnDestroy {
   curPage = 1;
 
   curUser: IUser;
+  // postForm: FormGroup;
+  searchForm: FormGroup;
 
-  constructor(private postService: PostService, private userService: UserService) { }
+  constructor(private postService: PostService, private userService: UserService, private fb: FormBuilder) {
+    // this.postForm = this.fb.group({
+    //   title: ['', [Validators.required]],
+    //   tag: ['', []],
+    //   content: ['', []]
+    // });
+    this.searchForm = this.fb.group({
+      searchTerm: ['']
+    });
+  }
+  get f() {
+    return this.searchForm.controls;
+  }
 
   ngOnInit() {
     // this.curUser = this.userService.curUser;
@@ -64,9 +79,9 @@ export class PostComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     ).subscribe(res => {
       console.log('getAllPost', res);
-      this.posts = res;
-      this.totalGlobalPost = this.posts.length;
-      this.posts = this.posts.slice(this.offset, this.offset + this.limit);
+      this.posts = res.data;
+      this.totalGlobalPost = res.total;
+      // this.posts = this.posts.slice(this.offset, this.offset + this.limit);
     });
   }
   getAllPostOfCurUser() {
@@ -89,11 +104,27 @@ export class PostComponent implements OnInit, OnDestroy {
     );
   }
 
+  searchPost() {
+    const userId = this.activeTab === 'my' ? this.curUser.id : null;
+    this.postService.searchPost(this.f.searchTerm.value, userId).pipe(takeUntil(this.destroy$)).subscribe(res => {
+      console.log('PostComponent -> searchPost -> data', res.data);
+      if (this.activeTab === 'my') {
+        this.myPosts = res.data;
+        this.totalMyPost = res.total;
+      } else {
+        this.posts = res.data;
+        this.totalGlobalPost = res.total;
+      }
+      // this.f.searchTerm.setValue(null);
+    });
+  }
+
   getPostsByTag(tag) {
     this.activeTab = 'global';
-    this.postService.getPostsBytag(tag).pipe(takeUntil(this.destroy$)).subscribe(data => {
+    this.postService.getPostsByTag(tag).pipe(takeUntil(this.destroy$)).subscribe(data => {
       console.log('PostComponent -> getPostsByTag -> data', data);
       this.posts = data;
+      this.totalGlobalPost = this.posts.length;
     });
   }
   changeCurPage(e) {
@@ -108,5 +139,13 @@ export class PostComponent implements OnInit, OnDestroy {
     this.curPage = pageNumber;
     this.getAllPost();
     this.getAllPostOfCurUser();
+  }
+  search({ value, valid }, tab) {
+    // if (tab === 'my') {
+    //   this.getAllPostOfCurUser();
+    // } else {
+    //   this.getAllPost();
+    // }
+    this.searchPost();
   }
 }
