@@ -1,7 +1,7 @@
 <app-page-top [isHomePage]="false" imgPageTop="assets/page-top-bg.png" [header]="'Bài đăng'"></app-page-top>
 <div class="container">
-    <app-loading *ngIf="loading"></app-loading>
-    <div *ngIf="!loading" class="">
+    <app-loading *ngIf="loading && !user"></app-loading>
+    <div *ngIf="!loading && user" class="">
         <div class="row" style="display: block !important;">
             <h1>{{post?.title || 'This is a title'}}</h1>
             <ng-container [ngTemplateOutlet]="meta"></ng-container>
@@ -17,14 +17,15 @@
             <hr>
         </div>
 
-        
+
         <h3 *ngIf="!isLogin" class="text-secondary text-center">
             <a [routerLink]="['/login']">Đăng nhập</a> để xem bình luận
         </h3>
         <div *ngIf="isLogin" class="">
-            <app-comment [post]="post" (commentSubmit)="refresh($event)" [user]="this.user"></app-comment>
-            <div class="" *ngFor="let cmt of post.comments">
-                <app-comment [user]="user" [post]="post" [isPost]="false" [contentValue]="cmt.content" [cmtId]="cmt.id" (commentRemove)="refresh($event)"></app-comment>
+            <app-comment [post]="post" (commentSubmit)="refresh($event)" [user]="user"></app-comment>
+            <div class="" *ngFor="let cmt of post.comments.slice().reverse()">
+                <app-comment [user]="user" [post]="post" [isPost]="false" [cmt]="cmt" (commentRemove)="refresh($event)">
+                </app-comment>
             </div>
         </div>
     </div>

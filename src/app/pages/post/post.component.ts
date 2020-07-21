@@ -26,6 +26,7 @@ export class PostComponent implements OnInit, OnDestroy {
   limit = 6;
   offset = 0;
   curPage = 1;
+  loading = false;
 
   curUser: IUser;
   // postForm: FormGroup;
@@ -75,22 +76,23 @@ export class PostComponent implements OnInit, OnDestroy {
     this.activeTab === 'my' && this.curUser ? this.getAllPostOfCurUser() : this.getAllPost();
   }
   getAllPost() {
+    this.loading = true;
     this.postService.getPosts(this.curPage).pipe(
       takeUntil(this.destroy$)
     ).subscribe(res => {
       console.log('getAllPost', res);
       this.posts = res.data;
       this.totalGlobalPost = res.total;
-      // this.posts = this.posts.slice(this.offset, this.offset + this.limit);
+      this.loading = false;
     });
   }
   getAllPostOfCurUser() {
+    this.loading = true;
     this.userService.getPostsByUser(this.curUser.id).subscribe(res => {
       console.log('mypost', res);
-
+      this.loading = false;
       this.myPosts = res;
       this.totalMyPost = this.myPosts.length;
-      this.myPosts = this.myPosts.slice(this.offset, this.offset + this.limit);
     });
   }
 

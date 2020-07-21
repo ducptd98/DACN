@@ -30,10 +30,10 @@ export class PostDetailComponent implements OnInit, OnDestroy {
     ).subscribe(routerParam => {
 
       const postId = routerParam.id;
-      this.postId = parseInt(postId, 1);
+      this.postId = +postId;
       console.log('routerParam', this.postId);
       this.isLogin = this.userService.isAuthenticated();
-      this.getPost(postId);
+      this.getPost(this.postId);
       this.getCurUser();
     });
   }
@@ -49,8 +49,8 @@ export class PostDetailComponent implements OnInit, OnDestroy {
     ).subscribe(res => {
       this.post = res;
       console.log('PostDetailComponent -> getPost -> res', res);
-    }, e => console.log(e), () => { this.loading = false; }
-    );
+      this.loading = false;
+    }, e => console.log(e));
   }
   getCurUser() {
     this.loading = true;
@@ -58,18 +58,19 @@ export class PostDetailComponent implements OnInit, OnDestroy {
     if (token) {
       this.userService.getUser(token).subscribe(res => {
         this.user = res;
+        console.log('PostDetailComponent -> getCurUser -> res', res);
         this.loading = false;
       });
     }
   }
   refresh(event) {
     console.log('refresh');
-
+    // this.loading = true;
     this.postService.getPost(this.postId).pipe(
       takeUntil(this.destroy$)
     ).subscribe(res => {
       this.post = res;
-      console.log('PostDetailComponent -> getPost -> res', res);
+      console.log('PostDetailComponent -> refresh -> res', res);
     }, e => console.log(e), () => { this.loading = false; }
     );
   }

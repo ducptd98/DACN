@@ -11,15 +11,20 @@
                             Cần <a [routerLink]="['/login']">Đăng nhập</a> để xem bài chia sẻ
                         </div>
                         <div *ngIf="curUser">
-                            <app-loading *ngIf="(myPosts.length == 0)"></app-loading>
-                            <div *ngIf="(myPosts.length > 0)">
-                                <ng-container *ngTemplateOutlet="searchCmp;context:{tab: activeTab}">
-                                </ng-container>
-                                <div class="" *ngFor="let post of myPosts">
-                                    <app-article [post]="post" [user]="curUser"></app-article>
+                            <app-loading *ngIf="loading"></app-loading>
+                            <div *ngIf="!loading">
+                                <div *ngIf="(myPosts.length > 0)">
+                                    <ng-container *ngTemplateOutlet="searchCmp;context:{tab: activeTab}">
+                                    </ng-container>
+                                    <div class="" *ngFor="let post of myPosts">
+                                        <app-article [post]="post" [user]="curUser"></app-article>
+                                    </div>
+                                    <app-pagination [length]="totalMyPost" [limit]="25"
+                                        (changePage)="changeCurPage($event)" [curPage]="curPage"></app-pagination>
                                 </div>
-                                <app-pagination [length]="totalMyPost" [limit]="25"
-                                    (changePage)="changeCurPage($event)" [curPage]="curPage"></app-pagination>
+                                <div *ngIf="(myPosts.length === 0)">
+                                    <h2 class="col-12 text-center mt-5 mb-5">Không có bất kì tin nào</h2>
+                                </div>
                             </div>
                         </div>
                     </ng-template>
@@ -29,21 +34,26 @@
                             [ngStyle]="{color: this.activeTab == 'global'? '#30caa0' : 'black'}">Global posts</span>
                     </ng-template>
                     <ng-template ngbTabContent>
-                        <app-loading *ngIf="(posts.length == 0)"></app-loading>
-                        <div *ngIf="(posts.length > 0)">
-                            <div *ngIf="!curUser">
-                                Cần <a [routerLink]="['/login']">Đăng nhập</a> để xem chi tiết bài chia sẻ
+                        <app-loading *ngIf="loading"></app-loading>
+                        <div *ngIf="!loading">
+                            <div *ngIf="(posts.length === 0)">
+                                <h2 class="col-12 text-center mt-5 mb-5">Không có bất kì tin nào</h2>
                             </div>
-                            <div [ngStyle]="{'pointer-events': this.curUser ? 'all':'none'}">
-
-                                <ng-container [ngTemplateOutlet]="searchCmp"
-                                    [ngTemplateOutletContext]="{tab: activeTab}">
-                                </ng-container>
-                                <div class="" *ngFor="let post of posts">
-                                    <app-article [post]="post"></app-article>
+                            <div *ngIf="(posts.length > 0)">
+                                <div *ngIf="!curUser">
+                                    Cần <a [routerLink]="['/login']">Đăng nhập</a> để xem chi tiết bài chia sẻ
                                 </div>
-                                <app-pagination [length]="totalGlobalPost" [limit]="25"
-                                    (changePage)="changeCurPage($event)" [curPage]="curPage"></app-pagination>
+                                <div [ngStyle]="{'pointer-events': this.curUser ? 'all':'none'}">
+    
+                                    <ng-container [ngTemplateOutlet]="searchCmp"
+                                        [ngTemplateOutletContext]="{tab: activeTab}">
+                                    </ng-container>
+                                    <div class="" *ngFor="let post of posts">
+                                        <app-article [post]="post"></app-article>
+                                    </div>
+                                    <app-pagination [length]="totalGlobalPost" [limit]="25"
+                                        (changePage)="changeCurPage($event)" [curPage]="curPage"></app-pagination>
+                                </div>
                             </div>
                         </div>
                     </ng-template>

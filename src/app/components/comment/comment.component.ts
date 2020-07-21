@@ -1,8 +1,9 @@
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IComment } from './../../../api/models/comment.model';
 import { IPost } from './../../../api/models/post.model';
 import { IUser } from './../../../api/models/user.model';
-import { IComment } from './../../../api/models/comment.model';
 import { CommentService } from './../../../api/services/comment.service';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { UserService } from './../../../api/services/user.service';
 
 @Component({
   selector: 'app-comment',
@@ -13,19 +14,28 @@ export class CommentComponent implements OnInit {
   @Input() isPost = true;
   @Input() post: IPost;
   @Input() user: IUser;
-  @Input() contentValue = '';
-  @Input() cmtId: number;
+  @Input() cmt: IComment;
 
   @Output() commentSubmit: EventEmitter<any> = new EventEmitter<any>();
   @Output() commentRemove: EventEmitter<any> = new EventEmitter<any>();
 
+  userNotPost: any;
+  contentValue = '';
 
 
-  constructor(private cmtService: CommentService) { }
+  constructor(private cmtService: CommentService, private userService: UserService) { }
 
   ngOnInit() {
-    console.log('CommentComponent -> post', this.post);
-    console.log('CommentComponent -> user', this.user);
+    if (!this.isPost) {
+      this.contentValue = this.cmt.content;
+      this.getUserNotPost();
+    }
+  }
+
+  getUserNotPost() {
+    this.userService.getUserInfo(this.cmt.user_id).subscribe(res => {
+      this.userNotPost = res;
+    });
   }
 
   comment() {
@@ -36,8 +46,8 @@ export class CommentComponent implements OnInit {
       user: null,
       user_id: this.user.id
     };
+
     this.cmtService.createComment(cmt).subscribe(res => {
-      console.log('cmtService', res);
       this.contentValue = '';
       this.commentSubmit.emit(true);
       // this.commentSubmit.unsubscribe();
@@ -45,8 +55,7 @@ export class CommentComponent implements OnInit {
   }
 
   deleteCmt() {
-    this.cmtService.deleteComment(this.cmtId).subscribe(res => {
-      console.log('deleteCmt', res);
+    this.cmtService.deleteComment(this.cmt.id).subscribe(res => {
       this.commentRemove.emit(true);
       // this.commentSubmit.unsubscribe();
     });
