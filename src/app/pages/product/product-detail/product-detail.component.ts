@@ -156,10 +156,13 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       console.log('error');
       return;
     }
+    const content = [];
+    content.push(this.product.desc);
+    content.push(this.product.images);
     const post: IPost = {
       id: null,
       title: this.postForm.value.title,
-      content: JSON.stringify(this.product.desc),
+      content: JSON.stringify(content),
       like: 0,
       tag: this.postForm.value.tag,
       created_at: null,

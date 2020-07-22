@@ -42,6 +42,10 @@ export class PostDetailComponent implements OnInit, OnDestroy {
     // Unsubscribe from the subject
     this.destroy$.unsubscribe();
   }
+  isArray(value) {
+    return Array.isArray(value);
+    // return typeof value;
+  }
   getPost(id) {
     this.loading = true;
     this.postService.getPost(id).pipe(

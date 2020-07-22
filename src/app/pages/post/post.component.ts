@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { IUser } from './../../../api/models/user.model';
 import { UserService } from './../../../api/services/user.service';
@@ -29,21 +31,28 @@ export class PostComponent implements OnInit, OnDestroy {
   loading = false;
 
   curUser: IUser;
-  // postForm: FormGroup;
+  postForm: FormGroup;
   searchForm: FormGroup;
 
-  constructor(private postService: PostService, private userService: UserService, private fb: FormBuilder) {
-    // this.postForm = this.fb.group({
-    //   title: ['', [Validators.required]],
-    //   tag: ['', []],
-    //   content: ['', []]
-    // });
+  constructor(private postService: PostService,
+              private userService: UserService,
+              private fb: FormBuilder,
+              private router: Router,
+              private modalService: NgbModal) {
+    this.postForm = this.fb.group({
+      title: ['', [Validators.required]],
+      tag: ['', []],
+      content: ['', []]
+    });
     this.searchForm = this.fb.group({
       searchTerm: ['']
     });
   }
   get f() {
     return this.searchForm.controls;
+  }
+  get fPost() {
+    return this.postForm.controls;
   }
 
   ngOnInit() {
@@ -149,5 +158,35 @@ export class PostComponent implements OnInit, OnDestroy {
     //   this.getAllPost();
     // }
     this.searchPost();
+  }
+  openModal(content) {
+    this.modalService.open(content, { centered: true });
+  }
+  closeModal() {
+    this.modalService.dismissAll();
+  }
+  createPost() {
+    if (this.postForm.invalid) {
+      console.log('error');
+      return;
+    }
+    const post: IPost = {
+      id: null,
+      title: this.fPost.title.value,
+      content: JSON.stringify(this.fPost.content.value),
+      like: 0,
+      tag: this.fPost.tag.value,
+      created_at: null,
+      updated_at: null,
+      user_id: this.userService.curUser.id,
+      link: null,
+      comments: [],
+      user: null
+    };
+    this.postService.createPost(post).pipe(takeUntil(this.destroy$)).subscribe(res => {
+      console.log('createPost', res);
+      this.router.navigate(['/post/' + res.id]);
+      this.closeModal();
+    });
   }
 }

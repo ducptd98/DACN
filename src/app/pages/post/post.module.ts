@@ -1,3 +1,4 @@
+import { OwlModule } from 'ngx-owl-carousel';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ResponseInterceptorService } from './../../utilities/response-interceptor.service';
@@ -10,7 +11,7 @@ import { NgModule, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PostRoutingModule } from './post-routing.module';
-import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTabsetModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -25,7 +26,9 @@ import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
     PostRoutingModule,
     SharedModule,
     NgbTabsetModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModalModule,
+    OwlModule,
   ],
   providers: [
     {

@@ -8,20 +8,34 @@
             <span class="">
                 #{{post?.tag || 'tag'}}
             </span>
-            <p class="text-medium" style="white-space: pre-line">
-                {{post?.content || 'This is a content'}}
-            </p>
-            <a [href]="post?.link" class="text-medium" style="white-space: pre-line">
-                {{post?.link || 'This is a link'}}
-            </a>
+            <div class="row">
+                <div *ngIf="isArray(post?.content)" class="col-12">
+                    <owl-carousel [options]="{
+                        items: 1,
+                        dots: true,
+                        nav: false,
+                        autoplay: true
+                        }" [carouselClasses]="['clients-slider']">
+                        <div *ngFor="let item of post?.content[1]" class="img-title">
+                            <img [src]="item" alt="" style="width: 300px; height: 300px;">
+                        </div>
+                    </owl-carousel>
+                </div>
+                <p class="text-medium" style="white-space: pre-line">
+                    {{isArray(post?.content) ? post?.content[0] : post?.content || 'This is a content'}}
+                </p>
+                <a [href]="post?.link" class="text-medium" style="white-space: pre-line">
+                    {{post?.link}}
+                </a>
+            </div>
             <hr>
         </div>
 
 
-        <h3 *ngIf="!isLogin" class="text-secondary text-center">
+        <h3 *ngIf="!isLogin && post.comments !== null" class="text-secondary text-center">
             <a [routerLink]="['/login']">Đăng nhập</a> để xem bình luận
         </h3>
-        <div *ngIf="isLogin" class="">
+        <div *ngIf="isLogin && post.comments !== null" class="">
             <app-comment [post]="post" (commentSubmit)="refresh($event)" [user]="user"></app-comment>
             <div class="" *ngFor="let cmt of post.comments.slice().reverse()">
                 <app-comment [user]="user" [post]="post" [isPost]="false" [cmt]="cmt" (commentRemove)="refresh($event)">
@@ -47,9 +61,12 @@
 </ng-template>
 <ng-template #favorite>
     <div class="pull-xs-right">
-        <button class="btn btn-sm btn-outline-success" (click)="handleLike()">
+        <button class="btn btn-sm btn-outline-success mr-2" (click)="handleLike()">
             <i class="fas fa-heart"></i>
             {{post?.like || 0}}
+        </button>
+        <button class="btn btn-sm btn-outline-secondary">
+            <i class="fas fa-edit"></i>
         </button>
     </div>
 </ng-template>

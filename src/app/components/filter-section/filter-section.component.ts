@@ -45,8 +45,8 @@ export class FilterSectionComponent implements OnInit, OnDestroy {
   find() {
     this.selectedAddress.emit(this.address);
     this.selectedDistrict.emit(this.district);
-    const name = this.district ? `${this.district.Title}` : this.province.Title;
-    const categoryTitle = this.category ? this.category.title : 'nha-dat-ban';
+    const name = this.district ? `${this.district.Title}` : (this.province ? this.province.Title : '');
+    const categoryTitle = this.category ? this.category.title : ''; // 'nha-dat-ban';
     this.router.navigate([`/product/search`, { name, category: categoryTitle }]);
   }
 

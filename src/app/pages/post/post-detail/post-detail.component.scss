@@ -29,7 +29,7 @@
 .pull-xs-right {
     float: right !important;
 }
-p{
+p {
     font-size: 1.2rem;
 }
 .tag-list {
@@ -59,4 +59,9 @@ p{
             background-color: red;
         }
     }
+}
+.img-title {
+    display: flex;
+    width: 100%;
+    justify-content: center;
 }

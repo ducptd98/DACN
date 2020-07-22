@@ -44,7 +44,7 @@
                                     Cần <a [routerLink]="['/login']">Đăng nhập</a> để xem chi tiết bài chia sẻ
                                 </div>
                                 <div [ngStyle]="{'pointer-events': this.curUser ? 'all':'none'}">
-    
+
                                     <ng-container [ngTemplateOutlet]="searchCmp"
                                         [ngTemplateOutletContext]="{tab: activeTab}">
                                     </ng-container>
@@ -73,30 +73,7 @@
     </div>
 </ng-template>
 
-<ng-template #searchCmp let-tab="tab">
-    <div class="row justify-content-center">
-        <form [formGroup]="searchForm" (ngSubmit)="search(searchForm,tab)"
-            class="form-inline my-2 justify-content-center mb-2 col-12 row">
-            <input class="form-control mr-sm-2" type="search"
-                [placeholder]="'Tìm kiếm ' + tab.toUpperCase() + ' post..'" aria-label="Search" style="width: 30%;"
-                formControlName="searchTerm">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm
-                kiếm</button>
-            <!-- <div class="col-md-8 col-sm-12">
-                <input class="form-control mr-sm-2" type="search"
-                    [placeholder]="'Tìm kiếm ' + tab.toUpperCase() + ' post..'" aria-label="Search" style="width: 30%;"
-                    formControlName="searchTerm">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm
-                    kiếm</button>
-            </div>
-            <div class="col-md-4 col-sm-12">
-                Add
-            </div> -->
-        </form>
-    </div>
-</ng-template>
-
-<!-- <ng-template #content let-modal>
+<ng-template #content let-modal>
     <div class="modal-header">
         <h4 class="modal-title">Đăng bài</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -122,8 +99,8 @@
                 <label for="content">
                     <h5>Nội dung</h5>
                 </label>
-                <input formControlName="content" type="text" class="form-control" id="content"
-                    placeholder="Nhập nội dung">
+                <textarea formControlName="content" type="text" class="form-control" id="content"
+                    placeholder="Nhập nội dung"></textarea>
             </div>
         </form>
     </div>
@@ -131,4 +108,21 @@
         <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
         <button type="button" class="btn btn-primary" (click)="createPost()">Submit</button>
     </div>
-</ng-template> -->
+</ng-template>
+
+<ng-template #searchCmp let-tab="tab">
+    <div class="row">
+        <form [formGroup]="searchForm" (ngSubmit)="search(searchForm,tab)" class="form-inline my-2 mb-2 col-12 row">
+            <div class="d-flex justify-content-center" style="width: 95%;">
+                <input class="form-control mr-sm-2" type="search"
+                    [placeholder]="'Tìm kiếm ' + tab.toUpperCase() + ' post..'" aria-label="Search" style="width: 30%;"
+                    formControlName="searchTerm">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm
+                    kiếm</button>
+            </div>
+            <div class="btn btn-sm btn-outline-secondary" style="width: 5%;" (click)="openModal(content)">
+                <i class="fas fa-plus"></i>
+            </div>
+        </form>
+    </div>
+</ng-template>
