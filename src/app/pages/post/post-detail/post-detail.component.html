@@ -65,8 +65,27 @@
             <i class="fas fa-heart"></i>
             {{post?.like || 0}}
         </button>
-        <!-- <button class="btn btn-sm btn-outline-secondary">
-            <i class="fas fa-edit"></i>
-        </button> -->
+        <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-sm btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle></button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <button ngbDropdownItem>Edit</button>
+              <button ngbDropdownItem (click)="openModal(deleteModal)">Delete</button>
+            </div>
+          </div>
+    </div>
+</ng-template>
+<ng-template #deleteModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Xóa bài</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        Bạn có muốn xóa bài này?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Đóng</button>
+      <button type="button" class="btn btn-outline-dark" (click)="deletePost()">Xóa</button>
     </div>
 </ng-template>

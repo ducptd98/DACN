@@ -85,7 +85,7 @@ export class PostService {
   deletePost(id): Observable<IPost> {
     let headers = this.defaultHeaders;
     headers = headers.set('Content-Type', 'application/json');
-    return this.http.delete<any>(`${this.basePath}/api/post`, {
+    return this.http.delete<any>(`${this.basePath}/api/post/` + id, {
       headers
     });
   }

@@ -11,7 +11,7 @@ import { NgModule, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PostRoutingModule } from './post-routing.module';
-import { NgbTabsetModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTabsetModule, NgbModalModule, NgbDropdown, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -19,7 +19,8 @@ import { NgbTabsetModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     PostComponent,
     PostDetailComponent,
     ArticleComponent,
-    CommentComponent
+    CommentComponent,
+
   ],
   imports: [
     CommonModule,
@@ -29,6 +30,7 @@ import { NgbTabsetModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     NgbModalModule,
     OwlModule,
+    NgbDropdownModule
   ],
   providers: [
     {

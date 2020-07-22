@@ -1,8 +1,10 @@
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { UserService } from './../../../../api/services/user.service';
 import { IUser } from './../../../../api/models/user.model';
 import { IPost } from './../../../../api/models/post.model';
 import { takeUntil } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { PostService } from './../../../../api/services/post.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -22,7 +24,12 @@ export class PostDetailComponent implements OnInit, OnDestroy {
 
   postId: number;
 
-  constructor(private postService: PostService, private route: ActivatedRoute, private userService: UserService) { }
+  constructor(private postService: PostService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private userService: UserService,
+              private toastrService: ToastrService,
+              private modalService: NgbModal) { }
 
   ngOnInit() {
     const routeSub = this.route.params.pipe(
@@ -86,5 +93,20 @@ export class PostDetailComponent implements OnInit, OnDestroy {
         console.log('update post', data);
       }
     );
+  }
+
+  openModal(content) {
+    this.modalService.open(content, { centered: true });
+  }
+  closeModal() {
+    this.modalService.dismissAll();
+  }
+
+  deletePost() {
+    this.postService.deletePost(this.post.id).subscribe(data => {
+      this.toastrService.success('Xóa thành công', 'Thành công');
+      this.closeModal();
+      this.router.navigate(['/post']);
+    });
   }
 }
