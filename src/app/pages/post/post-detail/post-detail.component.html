@@ -3,10 +3,10 @@
     <app-loading *ngIf="loading && !user"></app-loading>
     <div *ngIf="!loading && user" class="">
         <div class="row" style="display: block !important;">
-            <h1>{{post?.title || 'This is a title'}}</h1>
+            <h1>{{post?.title || ''}}</h1>
             <ng-container [ngTemplateOutlet]="meta"></ng-container>
             <span class="">
-                #{{post?.tag || 'tag'}}
+                #{{post?.tag || '#'}}
             </span>
             <div class="row">
                 <div *ngIf="isArray(post?.content)" class="col-12">
