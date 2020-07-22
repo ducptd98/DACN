@@ -1,3 +1,4 @@
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from './../../../../api/services/user.service';
@@ -7,7 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { PostService } from './../../../../api/services/post.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterContentInit, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-post-detail',
@@ -24,12 +25,21 @@ export class PostDetailComponent implements OnInit, OnDestroy {
 
   postId: number;
 
+  postForm: FormGroup;
+
   constructor(private postService: PostService,
               private route: ActivatedRoute,
               private router: Router,
+              private fb: FormBuilder,
               private userService: UserService,
               private toastrService: ToastrService,
-              private modalService: NgbModal) { }
+              private modalService: NgbModal) {
+    this.postForm = this.fb.group({
+      title: ['', [Validators.required]],
+      tag: ['', []],
+      content: ['', []]
+    });
+  }
 
   ngOnInit() {
     const routeSub = this.route.params.pipe(
@@ -44,6 +54,12 @@ export class PostDetailComponent implements OnInit, OnDestroy {
       this.getCurUser();
     });
   }
+
+
+  get f() {
+    return this.postForm.controls;
+  }
+
   ngOnDestroy() {
     this.destroy$.next(true);
     // Unsubscribe from the subject
@@ -61,6 +77,8 @@ export class PostDetailComponent implements OnInit, OnDestroy {
       this.post = res;
       console.log('PostDetailComponent -> getPost -> res', res);
       this.loading = false;
+      this.f.title.setValue(this.post.title);
+      this.f.tag.setValue(this.post.tag);
     }, e => console.log(e));
   }
   getCurUser() {
@@ -103,10 +121,31 @@ export class PostDetailComponent implements OnInit, OnDestroy {
   }
 
   deletePost() {
-    this.postService.deletePost(this.post.id).subscribe(data => {
+    this.postService.deletePost(this.post.id).pipe(takeUntil(this.destroy$)).subscribe(data => {
       this.toastrService.success('Xóa thành công', 'Thành công');
       this.closeModal();
       this.router.navigate(['/post']);
+    });
+  }
+  updatedPost() {
+    const image = this.isArray(this.post.content) ? this.post.content[1] : '';
+    const content = [];
+    if (this.isArray(this.post.content)) {
+      content.push(this.f.content.value);
+      content.push(image);
+    }
+    const updated = Object.assign({}, this.post, { content }, { title: this.f.title.value }, { tag: this.f.tag.value });
+
+    if (this.postForm.invalid) {
+      this.toastrService.error('lỗi form', 'Lỗi');
+      this.closeModal();
+      return;
+    }
+
+    this.postService.updatePost(updated).pipe(takeUntil(this.destroy$)).subscribe(data => {
+      this.toastrService.success('Sửa thành công', 'Thành công');
+      this.getPost(this.postId);
+      this.closeModal();
     });
   }
 }
