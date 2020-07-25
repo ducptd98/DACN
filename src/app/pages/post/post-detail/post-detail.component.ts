@@ -1,14 +1,15 @@
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
-import { UserService } from './../../../../api/services/user.service';
-import { IUser } from './../../../../api/models/user.model';
-import { IPost } from './../../../../api/models/post.model';
-import { takeUntil } from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { PostService } from './../../../../api/services/post.service';
-import { Component, OnInit, OnDestroy, AfterContentInit, AfterViewInit } from '@angular/core';
+import {FormGroup, Validators, FormBuilder} from '@angular/forms';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
+import {UserService} from './../../../../api/services/user.service';
+import {IUser} from './../../../../api/models/user.model';
+import {IPost} from './../../../../api/models/post.model';
+import {takeUntil} from 'rxjs/operators';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subject} from 'rxjs';
+import {PostService} from './../../../../api/services/post.service';
+import {Component, OnInit, OnDestroy, AfterContentInit, AfterViewInit} from '@angular/core';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-post-detail',
@@ -26,6 +27,12 @@ export class PostDetailComponent implements OnInit, OnDestroy {
   postId: number;
 
   postForm: FormGroup;
+
+  public config = {
+    language: 'vn',
+    placeholder: 'Nhập nội dung!'
+  };
+  public Editor = ClassicEditor;
 
   constructor(private postService: PostService,
               private route: ActivatedRoute,
@@ -65,10 +72,12 @@ export class PostDetailComponent implements OnInit, OnDestroy {
     // Unsubscribe from the subject
     this.destroy$.unsubscribe();
   }
+
   isArray(value) {
     return Array.isArray(value);
     // return typeof value;
   }
+
   getPost(id) {
     this.loading = true;
     this.postService.getPost(id).pipe(
@@ -79,8 +88,11 @@ export class PostDetailComponent implements OnInit, OnDestroy {
       this.loading = false;
       this.f.title.setValue(this.post.title);
       this.f.tag.setValue(this.post.tag);
+      this.f.content.setValue(JSON.stringify(this.post.content));
+
     }, e => console.log(e));
   }
+
   getCurUser() {
     this.loading = true;
     const token = this.userService.getToken();
@@ -92,15 +104,18 @@ export class PostDetailComponent implements OnInit, OnDestroy {
       });
     }
   }
+
   refresh(event) {
     console.log('refresh');
     // this.loading = true;
     this.postService.getPost(this.postId).pipe(
       takeUntil(this.destroy$)
     ).subscribe(res => {
-      this.post = res;
-      console.log('PostDetailComponent -> refresh -> res', res);
-    }, e => console.log(e), () => { this.loading = false; }
+        this.post = res;
+        console.log('PostDetailComponent -> refresh -> res', res);
+      }, e => console.log(e), () => {
+        this.loading = false;
+      }
     );
   }
 
@@ -114,8 +129,9 @@ export class PostDetailComponent implements OnInit, OnDestroy {
   }
 
   openModal(content) {
-    this.modalService.open(content, { centered: true });
+    this.modalService.open(content, {centered: true, size: 'lg'});
   }
+
   closeModal() {
     this.modalService.dismissAll();
   }
@@ -127,6 +143,7 @@ export class PostDetailComponent implements OnInit, OnDestroy {
       this.router.navigate(['/post']);
     });
   }
+
   updatedPost() {
     const image = this.isArray(this.post.content) ? this.post.content[1] : '';
     const content = [];
@@ -134,7 +151,7 @@ export class PostDetailComponent implements OnInit, OnDestroy {
       content.push(this.f.content.value);
       content.push(image);
     }
-    const updated = Object.assign({}, this.post, { content }, { title: this.f.title.value }, { tag: this.f.tag.value });
+    const updated = Object.assign({}, this.post, {content}, {title: this.f.title.value}, {tag: this.f.tag.value});
 
     if (this.postForm.invalid) {
       this.toastrService.error('lỗi form', 'Lỗi');

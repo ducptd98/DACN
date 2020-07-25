@@ -65,3 +65,7 @@ p {
     width: 100%;
     justify-content: center;
 }
+
+::ng-deep .ck-content {
+  min-height: 300px;
+}
