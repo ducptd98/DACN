@@ -9,7 +9,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Subject} from 'rxjs';
 import {PostService} from './../../../../api/services/post.service';
 import {Component, OnInit, OnDestroy, AfterContentInit, AfterViewInit} from '@angular/core';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-post-detail',
@@ -27,12 +26,6 @@ export class PostDetailComponent implements OnInit, OnDestroy {
   postId: number;
 
   postForm: FormGroup;
-
-  public config = {
-    language: 'vn',
-    placeholder: 'Nhập nội dung!'
-  };
-  public Editor = ClassicEditor;
 
   constructor(private postService: PostService,
               private route: ActivatedRoute,

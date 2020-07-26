@@ -69,7 +69,7 @@
       <button class="btn btn-sm btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle></button>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
         <button ngbDropdownItem (click)="openModal(updatedModal)">Edit</button>
-        <button ngbDropdownItem (click)="openModal(deleteModal)" >Delete</button>
+        <button ngbDropdownItem (click)="openModal(deleteModal)">Delete</button>
       </div>
     </div>
   </div>
@@ -116,9 +116,8 @@
         <label for="content">
           <h5>Nội dung</h5>
         </label>
-        <!--                <textarea formControlName="content" type="text" class="form-control" id="content"-->
-        <!--                    placeholder="Nhập nội dung"></textarea>-->
-        <ckeditor [config]="config" [editor]="Editor" formControlName="content" id="content"></ckeditor>
+        <textarea formControlName="content" type="text" class="form-control" id="content"
+                  placeholder="Nhập nội dung"></textarea>
       </div>
     </form>
   </div>

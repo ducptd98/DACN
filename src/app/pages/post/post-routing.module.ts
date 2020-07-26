@@ -2,7 +2,6 @@ import { PostDetailComponent } from './post-detail/post-detail.component';
 import { PostComponent } from './post.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 
 
 const routes: Routes = [
@@ -29,7 +28,6 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
-    CKEditorModule
   ],
   exports: [RouterModule]
 })

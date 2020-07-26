@@ -12,7 +12,6 @@ import { CommonModule } from '@angular/common';
 
 import { PostRoutingModule } from './post-routing.module';
 import { NgbTabsetModule, NgbModalModule, NgbDropdown, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 
 
 @NgModule({
@@ -32,7 +31,6 @@ import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
         NgbModalModule,
         OwlModule,
         NgbDropdownModule,
-        CKEditorModule
     ],
   providers: [
     {

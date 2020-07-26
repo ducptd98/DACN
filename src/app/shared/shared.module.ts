@@ -18,7 +18,6 @@ import {LoadingBarHttpClientModule} from '@ngx-loading-bar/http-client';
 import {LoadingBarRouterModule} from '@ngx-loading-bar/router';
 import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrModule} from 'ngx-toastr';
-import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import {ModalComponent} from '../components/modal/modal.component';
 
 
@@ -49,7 +48,6 @@ import {ModalComponent} from '../components/modal/modal.component';
     }),
     ReactiveFormsModule,
     FormsModule,
-    CKEditorModule
   ],
   exports: [
     PageTopComponent,
