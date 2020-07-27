@@ -67,5 +67,6 @@ p {
 }
 
 ::ng-deep .ck-content {
-  min-height: 300px;
+  max-height: 500px;
+  overflow-y: auto !important;
 }

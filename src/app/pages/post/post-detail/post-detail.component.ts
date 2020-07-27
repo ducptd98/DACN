@@ -9,6 +9,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Subject} from 'rxjs';
 import {PostService} from './../../../../api/services/post.service';
 import {Component, OnInit, OnDestroy, AfterContentInit, AfterViewInit} from '@angular/core';
+import {UploadAdapter} from '../../../utilities/UploadAdapter';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 
 @Component({
   selector: 'app-post-detail',
@@ -22,10 +24,35 @@ export class PostDetailComponent implements OnInit, OnDestroy {
   user: IUser;
   loading = false;
   isLogin = false;
+  pagingCmt = [];
 
   postId: number;
 
   postForm: FormGroup;
+
+  limit = 5;
+  curPage = 1;
+  offset = 0;
+
+
+  public Editor = DecoupledEditor;
+  // public Editor = CustomEditor;
+  public config = {
+    language: 'vi',
+    placeholder: 'Nhập nội dung',
+  };
+
+  public onReady(editor) {
+    editor.ui.getEditableElement().parentElement.insertBefore(
+      editor.ui.view.toolbar.element,
+      editor.ui.getEditableElement(),
+      editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+        console.log(btoa(loader.file));
+        return new UploadAdapter(loader);
+      }
+    );
+  }
+
 
   constructor(private postService: PostService,
               private route: ActivatedRoute,
@@ -81,9 +108,9 @@ export class PostDetailComponent implements OnInit, OnDestroy {
       this.loading = false;
       this.f.title.setValue(this.post.title);
       this.f.tag.setValue(this.post.tag);
-      this.f.content.setValue(JSON.stringify(this.post.content));
+      this.f.content.setValue(`<p style="font-size: 1rem">${this.post.content[0]}</p>`);
 
-    }, e => console.log(e));
+    }, e => console.log(e), () => this.pagingCmt = this.post.comments.slice(0, this.limit));
   }
 
   getCurUser() {
@@ -108,6 +135,7 @@ export class PostDetailComponent implements OnInit, OnDestroy {
         console.log('PostDetailComponent -> refresh -> res', res);
       }, e => console.log(e), () => {
         this.loading = false;
+        this.pagingCmt = this.post.comments.slice(this.offset, this.offset + this.limit);
       }
     );
   }
@@ -157,5 +185,14 @@ export class PostDetailComponent implements OnInit, OnDestroy {
       this.getPost(this.postId);
       this.closeModal();
     });
+  }
+
+  changeCurPage(e) {
+    const {pageNumber, limit, offset} = e;
+    console.log('PostComponent -> changeCurPage -> pageNumber', pageNumber);
+    // const pageNumber = e;
+    this.offset = (pageNumber - 1) * this.limit;
+    this.curPage = pageNumber;
+    this.pagingCmt = this.post.comments.slice(this.offset, this.offset + this.limit);
   }
 }

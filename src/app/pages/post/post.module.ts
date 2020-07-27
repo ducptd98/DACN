@@ -1,5 +1,5 @@
 import { OwlModule } from 'ngx-owl-carousel';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ResponseInterceptorService } from './../../utilities/response-interceptor.service';
 import { CommentComponent } from './../../components/comment/comment.component';
@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
 
 import { PostRoutingModule } from './post-routing.module';
 import { NgbTabsetModule, NgbModalModule, NgbDropdown, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
+
 
 
 @NgModule({
@@ -20,18 +22,19 @@ import { NgbTabsetModule, NgbModalModule, NgbDropdown, NgbDropdownModule } from 
     PostDetailComponent,
     ArticleComponent,
     CommentComponent,
-
   ],
-    imports: [
-        CommonModule,
-        PostRoutingModule,
-        SharedModule,
-        NgbTabsetModule,
-        ReactiveFormsModule,
-        NgbModalModule,
-        OwlModule,
-        NgbDropdownModule,
-    ],
+  imports: [
+    CommonModule,
+    PostRoutingModule,
+    SharedModule,
+    NgbTabsetModule,
+    ReactiveFormsModule,
+    NgbModalModule,
+    OwlModule,
+    NgbDropdownModule,
+    CKEditorModule,
+    FormsModule,
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

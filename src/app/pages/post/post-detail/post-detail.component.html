@@ -21,8 +21,7 @@
             </div>
           </owl-carousel>
         </div>
-        <p class="text-medium col-12" style="white-space: pre-line">
-          {{isArray(post?.content) ? post?.content[0] : post?.content || ''}}
+        <p class="text-medium col-12" [innerHTML]="isArray(post?.content) ? post?.content[0] : post?.content || ''">
         </p>
         <a [href]="post?.link" class="text-medium" style="white-space: pre-line">
           {{post?.link}}
@@ -32,15 +31,20 @@
     </div>
 
 
-    <h3 *ngIf="!isLogin && post.comments !== null" class="text-secondary text-center">
+    <h3 *ngIf="!isLogin && post?.comments" class="text-secondary text-center">
       <a [routerLink]="['/login']">Đăng nhập</a> để xem bình luận
     </h3>
-    <div *ngIf="isLogin && post.comments !== null" class="">
+    <div *ngIf="isLogin && post?.comments" class="">
       <app-comment [post]="post" (commentSubmit)="refresh($event)" [user]="user"></app-comment>
-      <div class="" *ngFor="let cmt of post.comments.slice().reverse()">
-        <app-comment [user]="user" [post]="post" [isPost]="false" [cmt]="cmt" (commentRemove)="refresh($event)">
-        </app-comment>
+      <hr>
+      <div class="mt-4">
+        <div *ngFor="let cmt of pagingCmt.slice().reverse()">
+          <app-comment [user]="user" [post]="post" [isPost]="false" [cmt]="cmt" (commentRemove)="refresh($event)">
+          </app-comment>
+        </div>
       </div>
+      <app-pagination [length]="post?.comments.length" [limit]="limit"
+                      [curPage]="curPage" (changePage)="changeCurPage($event)"></app-pagination>
     </div>
   </div>
 </div>
@@ -65,7 +69,7 @@
       <i class="fas fa-heart"></i>
       {{post?.like || 0}}
     </button>
-    <div ngbDropdown class="d-inline-block" [hidden]="user.id === post.user_id">
+    <div ngbDropdown class="d-inline-block" [hidden]="user.id !== post?.user_id">
       <button class="btn btn-sm btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle></button>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
         <button ngbDropdownItem (click)="openModal(updatedModal)">Edit</button>
@@ -116,8 +120,10 @@
         <label for="content">
           <h5>Nội dung</h5>
         </label>
-        <textarea formControlName="content" type="text" class="form-control" id="content"
-                  placeholder="Nhập nội dung"></textarea>
+<!--        <textarea formControlName="content" type="text" class="form-control" id="content"-->
+<!--                  placeholder="Nhập nội dung"></textarea>-->
+        <ckeditor [editor]="Editor" [config]="config" [data]="f.content.value" formControlName="content" (ready)="onReady($event)" #editor id="content">
+        </ckeditor>
       </div>
     </form>
   </div>

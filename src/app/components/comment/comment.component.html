@@ -1,10 +1,12 @@
 <div class="row">
-    <app-loading *ngIf="!post"></app-loading>
-    <div *ngIf="post" class="col-xs-12 col-md-8 offset-2 col-lg-8 mb-5">
+    <app-loading *ngIf="!post.comments"></app-loading>
+    <div *ngIf="post.comments" class="col-xs-12 col-md-8 offset-2 col-lg-8 mb-2">
         <div class="card w-100">
-            <textarea placeholder="Write a comment..." rows="3" class="form-control" [value]="contentValue"
-                (change)="handleChange($event)">
-            </textarea>
+            <ckeditor *ngIf="isPost" [editor]="Editor" [config]="config" [(ngModel)]="contentValue" (ready)="onReady($event)"
+                (change)="handleChange($event)" #editor id="editor">
+            </ckeditor>
+            <div *ngIf="!isPost" readonly [innerHTML]="contentValue" style="font-size: 1rem; padding: 15px 0px 0px 15px">
+            </div>
             <div class="card-footer text-muted d-flex justify-content-between">
                 <a href="/angular-forum/profile/answebdev">
                     <img [src]="!this.isPost ? userNotPost?.avatar_path.encoded: user?.avatar_path.encoded">

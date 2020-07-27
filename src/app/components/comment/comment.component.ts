@@ -1,9 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IComment } from './../../../api/models/comment.model';
-import { IPost } from './../../../api/models/post.model';
-import { IUser } from './../../../api/models/user.model';
-import { CommentService } from './../../../api/services/comment.service';
-import { UserService } from './../../../api/services/user.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {IComment} from './../../../api/models/comment.model';
+import {IPost} from './../../../api/models/post.model';
+import {IUser} from './../../../api/models/user.model';
+import {CommentService} from './../../../api/services/comment.service';
+import {UserService} from './../../../api/services/user.service';
+import * as CustomEditor from '../../../assets/ckeditor5/src/ckeditor';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import {UploadAdapter} from '../../utilities/UploadAdapter';
 
 @Component({
   selector: 'app-comment',
@@ -22,8 +25,27 @@ export class CommentComponent implements OnInit {
   userNotPost: any;
   contentValue = '';
 
+  public Editor = DecoupledEditor;
+  // public Editor = CustomEditor;
+  public config = {
+    language: 'vi',
+    placeholder: 'Nhập nội dung'
+  };
 
-  constructor(private cmtService: CommentService, private userService: UserService) { }
+  public onReady( editor ) {
+    editor.ui.getEditableElement().parentElement.insertBefore(
+      editor.ui.view.toolbar.element,
+      editor.ui.getEditableElement(),
+      editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+        console.log(btoa(loader.file));
+        return new UploadAdapter(loader);
+      }
+    );
+  }
+
+
+  constructor(private cmtService: CommentService, private userService: UserService) {
+  }
 
   ngOnInit() {
     if (!this.isPost) {
@@ -62,7 +84,7 @@ export class CommentComponent implements OnInit {
   }
 
   handleChange(event) {
-    this.contentValue = event.target.value;
+    // console.log(event);
   }
 
 }
