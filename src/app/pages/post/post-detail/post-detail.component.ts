@@ -1,3 +1,5 @@
+import {environment} from './../../../../environments/environment';
+import Pusher from 'pusher-js';
 import {FormGroup, Validators, FormBuilder} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
@@ -6,7 +8,7 @@ import {IUser} from './../../../../api/models/user.model';
 import {IPost} from './../../../../api/models/post.model';
 import {takeUntil} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {PostService} from './../../../../api/services/post.service';
 import {Component, OnInit, OnDestroy, AfterContentInit, AfterViewInit} from '@angular/core';
 import {UploadAdapter} from '../../../utilities/UploadAdapter';
@@ -33,6 +35,7 @@ export class PostDetailComponent implements OnInit, OnDestroy {
   limit = 5;
   curPage = 1;
   offset = 0;
+
 
 
   public Editor = DecoupledEditor;
@@ -66,6 +69,7 @@ export class PostDetailComponent implements OnInit, OnDestroy {
       tag: ['', []],
       content: ['', []]
     });
+
   }
 
   ngOnInit() {
@@ -125,6 +129,7 @@ export class PostDetailComponent implements OnInit, OnDestroy {
     }
   }
 
+
   refresh(event) {
     console.log('refresh');
     // this.loading = true;
@@ -133,8 +138,9 @@ export class PostDetailComponent implements OnInit, OnDestroy {
     ).subscribe(res => {
         this.post = res;
         console.log('PostDetailComponent -> refresh -> res', res);
+
       }, e => console.log(e), () => {
-        this.loading = false;
+        // this.loading = false;
         this.pagingCmt = this.post.comments.slice(this.offset, this.offset + this.limit);
       }
     );

@@ -4,7 +4,11 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://127.0.0.1:8000'
+  baseUrl: 'http://127.0.0.1:8000',
+  PUSHER_APP_ID: '839785',
+  PUSHER_APP_KEY: '8bb13050bd56dddd1572',
+  PUSHER_APP_SECRET: '6396309d3b61b970f122',
+  PUSHER_APP_CLUSTER: 'ap1'
 };
 
 /*

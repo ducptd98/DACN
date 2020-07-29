@@ -35,6 +35,7 @@
     "ngx-owl-carousel": "^2.0.7",
     "ngx-toastr": "^11.3.3",
     "owl.carousel": "^2.3.4",
+    "pusher-js": "^6.0.3",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
