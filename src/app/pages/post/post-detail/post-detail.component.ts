@@ -133,15 +133,16 @@ export class PostDetailComponent implements OnInit, OnDestroy {
   refresh(event) {
     console.log('refresh');
     // this.loading = true;
+    let post;
     this.postService.getPost(this.postId).pipe(
       takeUntil(this.destroy$)
     ).subscribe(res => {
-        this.post = res;
+        post = res;
         console.log('PostDetailComponent -> refresh -> res', res);
 
       }, e => console.log(e), () => {
         // this.loading = false;
-        this.pagingCmt = this.post.comments.slice(this.offset, this.offset + this.limit);
+        this.pagingCmt = post.comments.slice(this.offset, this.offset + this.limit);
       }
     );
   }

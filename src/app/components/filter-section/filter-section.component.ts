@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { LocationService } from './../../../api/services/location.service';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {LocationService} from './../../../api/services/location.service';
 
 @Component({
   selector: 'app-filter-section',
@@ -27,13 +27,14 @@ export class FilterSectionComponent implements OnInit, OnDestroy {
   @Output() selectedDistrict = new EventEmitter<any>();
 
   constructor(private fb: FormBuilder,
-    // private toastrSercvice: ToastrService,
+              // private toastrSercvice: ToastrService,
               private router: Router,
               private locateService: LocationService) {
     this.locationForm = this.fb.group({
       provinceControl: []
     });
   }
+
   ngOnDestroy(): void {
     this.subscription.forEach(item => item.unsubscribe());
   }
@@ -45,27 +46,40 @@ export class FilterSectionComponent implements OnInit, OnDestroy {
   find() {
     this.selectedAddress.emit(this.address);
     this.selectedDistrict.emit(this.district);
-    const name = this.district ? `${this.district.Title}` : (this.province ? this.province.Title : '');
+    let name = this.district ? `${this.district.Title}` : (this.province ? this.province.Title : '');
+    // if (this.district) {
+    //   name = this.district.Title;
+    // }
+    // if (this.province) {
+    //   name = this.province.Title;
+    // }
+    if (this.address) {
+      name += this.address;
+    }
     const categoryTitle = this.category ? this.category.title : ''; // 'nha-dat-ban';
-    this.router.navigate([`/product/search`, { name, category: categoryTitle }]);
+    this.router.navigate([`/product/search`, {name, category: categoryTitle}]);
   }
 
   provinceChange(e) {
     console.log('province', this.province);
     this.getDistrict(this.province.ID);
   }
+
   districtChange(e) {
     console.log('district', this.district);
   }
+
   categoryChange(e) {
     console.log('category', this.category);
   }
+
   getProvince() {
     const locateSubscription = this.locateService.getProvinceCity().subscribe(data => {
       this.provinces = data.LtsItem;
     });
     this.subscription.push(locateSubscription);
   }
+
   getDistrict(provinceId) {
     const locateSubscription = this.locateService.getDistrict(provinceId).subscribe(data => {
       this.districts = data;
