@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { PostRoutingModule } from './post-routing.module';
 import { NgbTabsetModule, NgbModalModule, NgbDropdown, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
+import {FormatDatePipe} from '../../utilities/format-date.pipe';
 
 
 
@@ -22,6 +23,7 @@ import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
     PostDetailComponent,
     ArticleComponent,
     CommentComponent,
+    FormatDatePipe
   ],
   imports: [
     CommonModule,
@@ -40,7 +42,7 @@ import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
       provide: HTTP_INTERCEPTORS,
       useClass: forwardRef(() => ResponseInterceptorService),
       multi: true
-    },
+    }
   ]
 })
 export class PostModule { }

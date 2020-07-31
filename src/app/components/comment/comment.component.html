@@ -8,9 +8,11 @@
             <div *ngIf="!isPost" readonly [innerHTML]="contentValue" style="font-size: 1rem; padding: 15px 0px 0px 15px">
             </div>
             <div class="card-footer text-muted d-flex justify-content-between">
-                <a href="/angular-forum/profile/answebdev">
+                <a href="/angular-forum/profile/answebdev" style="display: flex">
                     <img [src]="!this.isPost ? userNotPost?.avatar_path.encoded: user?.avatar_path.encoded">
+                    <div class="text-secondary pt-1 pl-1">{{cmt?.created_at | formatDate}}</div>
                 </a>
+
                 <button *ngIf="this.isPost" type="button" class="btn btn-primary" (click)="comment()">Đăng</button>
                 <button *ngIf="!this.isPost" type="button" style="border: none; background: transparent;"
                     [hidden]="cmt.user_id !== user.id" (click)="deleteCmt()">

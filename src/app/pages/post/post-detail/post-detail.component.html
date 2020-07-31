@@ -58,7 +58,7 @@
       <a class="author" href="/angular-forum/profile/answebdev">
         {{post?.user?.name}}
       </a>
-      <span class="date">{{post?.created_at |date: 'short'}}</span>
+      <span class="date">{{post?.created_at |date: 'short' : '+7' : 'vi'}}</span>
     </div>
     <ng-container [ngTemplateOutlet]="favorite"></ng-container>
   </div>

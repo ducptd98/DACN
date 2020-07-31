@@ -76,7 +76,8 @@ export class CommentComponent implements OnInit {
       post_id: this.post.id,
       content: this.contentValue,
       user: null,
-      user_id: this.user.id
+      user_id: this.user.id,
+      created_at: null
     };
 
     this.cmtService.createComment(cmt).subscribe(res => {

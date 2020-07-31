@@ -29,6 +29,7 @@
     "@ngx-loading-bar/core": "^4.2.0",
     "@ngx-loading-bar/http-client": "^4.2.0",
     "@ngx-loading-bar/router": "^4.2.0",
+    "date-fns": "^2.15.0",
     "jquery": "^3.4.1",
     "ng-zorro-antd": "^8.5.2",
     "ngx-facebook": "^2.4.0",

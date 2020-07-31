@@ -6,4 +6,5 @@ export interface IComment {
     content: string;
     user_id: number;
     user: IUser;
+    created_at: Date;
 }

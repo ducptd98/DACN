@@ -49,7 +49,7 @@
                 <div class="description">
                     <div *ngFor="let item of product.desc">
                         <!-- <p *ngFor="let it of item.split('.')">{{it}}</p> -->
-                        <p>{{item}}</p>
+                        <p [innerHTML]="item"></p>
                     </div>
                 </div>
                 <!-- <fb-share [href]="currentUrl" [layout]="'button'" [size]="'large'"></fb-share> -->

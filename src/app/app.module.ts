@@ -6,7 +6,7 @@ import { ApiErrorService } from './utilities/api-error.service';
 import { ResponseInterceptorService } from './utilities/response-interceptor.service';
 import { AlertProvider } from './utilities/alert.provider';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, forwardRef } from '@angular/core';
+import {NgModule, forwardRef, LOCALE_ID} from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,9 +26,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from '@auth0/angular-jwt';
 // import { registerLocaleData } from '@angular/common';
-// import en from '@angular/common/locales/en';
+import vi from '@angular/common/locales/vi';
+import {registerLocaleData} from '@angular/common';
 
-// registerLocaleData(en);
+registerLocaleData(vi);
 
 function getToken() {
   return localStorage.getItem('TOKEN');
@@ -75,7 +76,8 @@ function getToken() {
       multi: true
     },
     AuthGuardGuard,
-    PermissionGuard
+    PermissionGuard,
+    { provide: LOCALE_ID, useValue: "vi" }
   ],
   bootstrap: [AppComponent]
 })
