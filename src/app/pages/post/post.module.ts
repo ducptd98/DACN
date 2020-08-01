@@ -14,6 +14,7 @@ import { PostRoutingModule } from './post-routing.module';
 import { NgbTabsetModule, NgbModalModule, NgbDropdown, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import {FormatDatePipe} from '../../utilities/format-date.pipe';
+import {SanitizeHtmlPipe} from '../../utilities/sanitize-html.pipe';
 
 
 
@@ -23,7 +24,8 @@ import {FormatDatePipe} from '../../utilities/format-date.pipe';
     PostDetailComponent,
     ArticleComponent,
     CommentComponent,
-    FormatDatePipe
+    FormatDatePipe,
+    SanitizeHtmlPipe
   ],
   imports: [
     CommonModule,

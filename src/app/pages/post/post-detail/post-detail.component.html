@@ -21,7 +21,7 @@
             </div>
           </owl-carousel>
         </div>
-        <p class="text-medium col-12" [innerHTML]="isArray(post?.content) ? post?.content[0] : post?.content || ''">
+        <p class="text-medium col-12 ck-content" [innerHTML]="isArray(post?.content) ? (post?.content[0] | sanitizeHtml)  : (post?.content | sanitizeHtml) || ''">
         </p>
         <a [href]="post?.link" class="text-medium" style="white-space: pre-line">
           {{post?.link}}
@@ -122,7 +122,7 @@
         </label>
 <!--        <textarea formControlName="content" type="text" class="form-control" id="content"-->
 <!--                  placeholder="Nhập nội dung"></textarea>-->
-        <ckeditor [editor]="Editor" [config]="config" [data]="f.content.value" formControlName="content" (ready)="onReady($event)" #editor id="content">
+        <ckeditor class="ck-content" [editor]="Editor" [config]="config" [data]="f.content.value" formControlName="content" (ready)="onReady($event)" #editor id="content">
         </ckeditor>
       </div>
     </form>

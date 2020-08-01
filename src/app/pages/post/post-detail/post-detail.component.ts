@@ -10,14 +10,15 @@ import {takeUntil} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable, Subject} from 'rxjs';
 import {PostService} from './../../../../api/services/post.service';
-import {Component, OnInit, OnDestroy, AfterContentInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit, OnDestroy, AfterContentInit, AfterViewInit, ViewEncapsulation} from '@angular/core';
 import {UploadAdapter} from '../../../utilities/UploadAdapter';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 
 @Component({
   selector: 'app-post-detail',
   templateUrl: './post-detail.component.html',
-  styleUrls: ['./post-detail.component.scss']
+  styleUrls: ['./post-detail.component.scss'],
+  // encapsulation: ViewEncapsulation.None,
 })
 export class PostDetailComponent implements OnInit, OnDestroy {
 
@@ -43,6 +44,7 @@ export class PostDetailComponent implements OnInit, OnDestroy {
   public config = {
     language: 'vi',
     placeholder: 'Nhập nội dung',
+    allowedContent: true
   };
 
   public onReady(editor) {
